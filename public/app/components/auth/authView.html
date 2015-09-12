@@ -1,0 +1,25 @@
+<div class="col-sm-6 col-sm-offset-3">
+    <div class="well">
+        <h3>Login</h3>
+        <div class="alert alert-danger" ng-if="auth.loginError">
+            <strong>Error: </strong> {{auth.loginErrorText}}
+        </div>
+        <form>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Login" ng-model="auth.formLogin">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password" ng-model="auth.formPassword">
+            </div>
+            <div class="form-group">
+                <ui-select ng-model="auth.organization" theme="bootstrap">
+                    <ui-select-match placeholder="Select or search a organization in the list...">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices repeat="organization in auth.organizations | filter: $select.search">
+                        <span ng-bind-html="organization.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <button class="btn btn-primary" ng-click="auth.login()">Submit</button>
+        </form>
+    </div>
+</div>

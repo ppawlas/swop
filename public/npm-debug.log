@@ -1,0 +1,67 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', 'angular-confirm' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.37
+4 verbose node symlink /usr/bin/node
+5 verbose cache add [ 'angular-confirm', null ]
+6 verbose cache add name=undefined spec="angular-confirm" args=["angular-confirm",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'angular-confirm',
+7 verbose parsed url   path: 'angular-confirm',
+7 verbose parsed url   href: 'angular-confirm' }
+8 silly lockFile bf5404a8-angular-confirm angular-confirm
+9 verbose lock angular-confirm /home/vagrant/.npm/bf5404a8-angular-confirm.lock
+10 silly lockFile bf5404a8-angular-confirm angular-confirm
+11 silly lockFile bf5404a8-angular-confirm angular-confirm
+12 verbose addNamed [ 'angular-confirm', '' ]
+13 verbose addNamed [ null, '*' ]
+14 silly lockFile 7b238471-angular-confirm angular-confirm@
+15 verbose lock angular-confirm@ /home/vagrant/.npm/7b238471-angular-confirm.lock
+16 silly addNameRange { name: 'angular-confirm', range: '*', hasData: false }
+17 verbose request where is /angular-confirm
+18 verbose request registry https://registry.npmjs.org/
+19 verbose request id a6c6e2d371e24c52
+20 verbose url raw /angular-confirm
+21 verbose url resolving [ 'https://registry.npmjs.org/', './%C2%96angular-confirm' ]
+22 verbose url resolved https://registry.npmjs.org/%C2%96angular-confirm
+23 verbose request where is https://registry.npmjs.org/%C2%96angular-confirm
+24 info trying registry request attempt 1 at 11:00:02
+25 http GET https://registry.npmjs.org/%C2%96angular-confirm
+26 http 404 https://registry.npmjs.org/%C2%96angular-confirm
+27 silly registry.get cb [ 404,
+27 silly registry.get   { 'content-type': 'application/json',
+27 silly registry.get     'cache-control': 'max-age=0',
+27 silly registry.get     'content-length': '77',
+27 silly registry.get     'accept-ranges': 'bytes',
+27 silly registry.get     date: 'Sat, 12 Sep 2015 11:00:02 GMT',
+27 silly registry.get     via: '1.1 varnish',
+27 silly registry.get     age: '0',
+27 silly registry.get     connection: 'close',
+27 silly registry.get     'x-served-by': 'cache-fra1239-FRA',
+27 silly registry.get     'x-cache': 'MISS',
+27 silly registry.get     'x-cache-hits': '0',
+27 silly registry.get     'x-timer': 'S1442055602.039180,VS0,VE93' } ]
+28 silly lockFile 7b238471-angular-confirm angular-confirm@
+29 silly lockFile 7b238471-angular-confirm angular-confirm@
+30 error 404 Not Found
+30 error 404
+30 error 404 'angular-confirm' is not in the npm registry.
+30 error 404 You should bug the author to publish it
+30 error 404
+30 error 404 Note that you can also install from a
+30 error 404 tarball, folder, or http url, or git url.
+31 error System Linux 3.13.0-24-generic
+32 error command "/usr/bin/node" "/usr/bin/npm" "install" "angular-confirm"
+33 error cwd /home/vagrant/Code/jot-bot/public
+34 error node -v v0.10.37
+35 error npm -v 1.4.28
+36 error code E404
+37 verbose exit [ 1, true ]
