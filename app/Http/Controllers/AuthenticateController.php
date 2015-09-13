@@ -68,6 +68,11 @@ class AuthenticateController extends Controller
             return response()->json(['token_absent', $e->getStatusCode()]);
         }
 
+        // since we have found a user, lets fetch his organization and roles,
+        // so they can be also attached to the response
+        // @TODO verify approach
+        $user->organization;
+        $user->roles;
         // the token is valid and we have found the user via the sub claim
         return response()->json(compact('user'));
     }

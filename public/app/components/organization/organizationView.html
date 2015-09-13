@@ -1,0 +1,26 @@
+<div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><strong>Organizations</strong></div>
+
+    <table class="table table-striped" ng-if="organization.organizations">
+        <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Active</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr dir-paginate="organization in organization.organizations | itemsPerPage: 10">
+            <td>{{organization.code}}</td>
+            <td>{{organization.name}}</td>
+            <td>{{organization.active}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="panel-footer">
+        <dir-pagination-controls></dir-pagination-controls>
+    </div>
+
+</div>

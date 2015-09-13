@@ -1,20 +1,32 @@
-<div class="col-sm-6 col-sm-offset-3">
-    <div class="well">
-        <h5 ng-if="authenticated">Welcome, {{currentUser.name}}</h5>
-        <h3>Users</h3>
-        <div class="buttons" style="margin-bottom: 10px">
-            <button class="btn btn-primary" ng-click="user.getUsers()">Get Users!</button>
-            <button class="btn btn-danger" ng-click="user.logout()" confirm="Are you sure you want to logout?">Logout</button>
-        </div>
-        <ul class="list-group" ng-if="user.users">
-            <li class="list-group-item" ng-repeat="user in user.users">
-                <h4>{{user.name}}</h4>
-                <h5>{{user.surname}}</h5>
-            </li>
-        </ul>
-        <div class="alert alert-danger" ng-if="user.error">
-            <strong>There was an error: </strong> {{user.error.error}}
-            <br>Please go back and login again
-        </div>
+<div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><strong>Users</strong></div>
+
+    <table class="table table-striped" ng-if="user.users">
+        <thead>
+            <tr>
+                <th>Login</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Email</th>
+                <th>Active</th>
+                <th>Organization_id</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr dir-paginate="user in user.users | itemsPerPage: 10">
+                <td>{{user.login}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.surname}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.active}}</td>
+                <td>{{user.organization_id}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="panel-footer">
+        <dir-pagination-controls></dir-pagination-controls>
     </div>
+
 </div>

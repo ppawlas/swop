@@ -5,11 +5,15 @@
 		<title>SWOP</title>
 		<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
 		<link rel="stylesheet" href="node_modules/angular-ui-select/select.css">
+		<link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
 	</head>
 	<body ng-app="authApp">
+	    <header>
+            <div ui-view="navbar"></div>
+        </header>
 
 		<div class="container">
-			<div ui-view></div>
+			<div ui-view="content"></div>
 		</div>
 
 	</body>
@@ -21,10 +25,19 @@
 	<script src="node_modules/angular-confirm/angular-confirm.js"></script>
 	<script src="node_modules/angular-sanitize/angular-sanitize.js"></script>
 	<script src="node_modules/angular-ui-select/select.js"></script>
+	<script src="node_modules/angular-utils-pagination/dirPagination.js"></script>
 
 	<!-- Application Scripts -->
 	<script src="app/app.js"></script>
 	<script src="app/components/auth/authController.js"></script>
 	<script src="app/components/user/userController.js"></script>
+	<script src="app/components/nav/navController.js"></script>
+	<script src="app/components/dash/dashController.js"></script>
+	<script src="app/components/group/groupController.js"></script>
+	<script src="app/components/indicator/indicatorController.js"></script>
+	<script src="app/components/report/reportController.js"></script>
+	<script src="app/components/organization/organizationController.js"></script>
 	<script src="app/shared/organization/organizationService.js"></script>
+	<script src="app/shared/user/userService.js"></script>
+	<script src="app/shared/auth/authService.js"></script>
 </html>

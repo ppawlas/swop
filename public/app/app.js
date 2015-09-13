@@ -3,7 +3,7 @@
 	'use strict';
 
 	angular
-        .module('authApp', ['ui.router', 'satellizer', 'ui.bootstrap', 'angular-confirm', 'ui.select', 'ngSanitize'])
+        .module('authApp', ['ui.router', 'satellizer', 'ui.bootstrap', 'angular-confirm', 'ui.select', 'ngSanitize', 'angularUtils.directives.dirPagination'])
         .config(function($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, $provide) {
 
             function redirectWhenLoggedOut($q, $injector) {
@@ -55,24 +55,105 @@
             $authProvider.loginUrl = '/api/authenticate';
 
             // Redirect to the auth state if any other states
-            // are requested other than users
+            // are requested
             $urlRouterProvider.otherwise('/auth');
 
             $stateProvider
                 .state('auth', {
                     url: '/auth',
-                    templateUrl: 'app/components/auth/authView.html',
-                    controller: 'AuthController as auth',
-                    resolve: {
-                        organizations: function(OrganizationService) {
-                            return OrganizationService.getAll();
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/auth/authView.html',
+                            controller: 'AuthController as auth',
+                            resolve: {
+                                organizations: function(OrganizationService) {
+                                    return OrganizationService.getAll();
+                                }
+                            }
                         }
+                    }
+                })
+                .state('dash', {
+                    url: '/dash',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/dash/dashView.html',
+                            controller: 'DashController as dash'
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
+                })
+                .state('groups', {
+                    url: '/groups',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/group/groupView.html',
+                            controller: 'GroupController as group'
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
+                })
+                .state('indicators', {
+                    url: '/indicators',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/indicator/indicatorView.html',
+                            controller: 'IndicatorController as indicator'
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
+                })
+                .state('organizations', {
+                    url: '/organizations',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/organization/organizationView.html',
+                            controller: 'OrganizationController as organization',
+                            resolve: {
+                                organizations: function(OrganizationService) {
+                                    return OrganizationService.getAll();
+                                }
+                            }
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
+                })
+                .state('reports', {
+                    url: '/reports',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/report/reportView.html',
+                            controller: 'ReportController as report'
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
                     }
                 })
                 .state('users', {
                     url: '/users',
-                    templateUrl: 'app/components/user/userView.html',
-                    controller: 'UserController as user'
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/user/userView.html',
+                            controller: 'UserController as user',
+                            resolve: {
+                                users: function(UserService) {
+                                    return UserService.getAll();
+                                }
+                            }
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
                 });
         })
         .run(function($rootScope, $state) {
@@ -107,8 +188,8 @@
                         // to change states
                         event.preventDefault();
 
-                        // go to the "main" state which in our case is users
-                        $state.go('users');
+                        // go to the "main" state which in our case is dash
+                        $state.go('dash');
                     }
                 // There is no user data in local storage
                 // so redirect to the login page

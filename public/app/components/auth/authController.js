@@ -40,6 +40,12 @@
             // Because we returned the $http.get request in the $auth.login
             // promise, we can chain the next promise to the end here
             }).then(function(response) {
+                // For the sake of simplicity information about
+                // user role are slightly changed
+                response.data.user.role = response.data.user.roles[0];
+                response.data.user.isAdmin = (response.data.user.roles[0].name === 'admin');
+                response.data.user.isManager = (response.data.user.roles[0].name === 'manager');
+
                 // Stringify the returned data to prepare it
                 // to go into local storage
                 var user = JSON.stringify(response.data.user);
@@ -57,8 +63,8 @@
                 $rootScope.currentUser = response.data.user;
 
                 // Everything worked out so we can now redirect to
-                // the users state to view the data
-                $state.go('users');
+                // the dash state to start work
+                $state.go('dash');
             });
         }
     }
