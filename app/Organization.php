@@ -29,4 +29,25 @@ class Organization extends Model
     {
         return $this->hasMany('App\User');
     }
+
+    /**
+     * Get the indicators for the organization.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function indicators()
+    {
+        return $this->belongsToMany('App\Indicator')->withPivot('coefficient')->withTimestamps();
+    }
+
+    /**
+     * Get the groups belonging to the organization.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function groups()
+    {
+        return $this->hasMany('App\Group');
+    }
+
 }

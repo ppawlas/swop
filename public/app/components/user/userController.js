@@ -6,7 +6,7 @@
         .module('authApp')
         .controller('UserController', UserController);
 
-    function UserController($http, AuthService, users) {
+    function UserController(AuthService, users) {
 
         var vm = this;
 
