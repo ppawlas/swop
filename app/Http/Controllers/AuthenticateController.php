@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Organization;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -20,19 +21,14 @@ class AuthenticateController extends Controller
         // Apply the jwt.auth middleware to all methods in this controller
         // except for the authenticate method. We don't want to prevent
         // the user from retrieving their token if they don't already have it
-        $this->middleware('jwt.auth', ['except' => ['authenticate']]);
+        // also the list of publicly available organizations is possible
+        // to retrieve
+        $this->middleware('jwt.auth', ['except' => ['getAvailableOrganizations', 'authenticate']]);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
+    public function getAvailableOrganizations()
     {
-        // Retrieve all the users in the database and return them
-        $users = User::all();
-        return $users;
+        return Organization::available()->get();
     }
 
     public function authenticate(Request $request)
@@ -70,9 +66,7 @@ class AuthenticateController extends Controller
 
         // since we have found a user, lets fetch his organization and roles,
         // so they can be also attached to the response
-        // @TODO verify approach
-        $user->organization;
-        $user->roles;
+        $user->load('organization', 'roles');
         // the token is valid and we have found the user via the sub claim
         return response()->json(compact('user'));
     }

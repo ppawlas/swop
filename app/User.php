@@ -72,6 +72,16 @@ class User extends Model implements AuthenticatableContract,
     }
 
     /**
+     * Get the reports owned by the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function myReports()
+    {
+        return $this->hasMany('App\Report', 'owner_id');
+    }
+
+    /**
      * Get the reports referencing the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -79,5 +89,15 @@ class User extends Model implements AuthenticatableContract,
     public function reports()
     {
         return $this->belongsToMany('App\Report')->withPivot('view_self', 'view_all')->withTimestamps();
+    }
+
+    /**
+     * Get the results belonging to the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function results()
+    {
+        return $this->hasMany('App\Result');
     }
 }

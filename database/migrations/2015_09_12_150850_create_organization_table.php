@@ -18,6 +18,7 @@ class CreateOrganizationTable extends Migration
             $table->string('code')->unique();
             $table->string('name');
             $table->boolean('active');
+            $table->boolean('system')->default(false);
             $table->timestamps();
         });
     }

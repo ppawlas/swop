@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Group;
+use App\Report;
+use App\Policies\GroupPolicy;
+use App\Policies\ReportPolicy;
+
+use App\Organization;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -13,7 +19,10 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+//        Organization::class => OrganizationPolicy::class,
+//        User::class => UserPolicy::class,
+        Group::class => GroupPolicy::class,
+        Report::class => ReportPolicy::class,
     ];
 
     /**
@@ -26,6 +35,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         parent::registerPolicies($gate);
 
-        //
+        $gate->define('adminOnly', function($user) {
+            return $user->hasRole('admin');
+        });
+
+        $gate->define('managerOnly', function($user) {
+            return $user->hasRole('manager');
+        });
     }
 }

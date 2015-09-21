@@ -6,14 +6,19 @@
 
         <ul class="nav navbar-nav">
             <li><a role="button" ui-sref="dash"><i class="fa fa-home"></i> Dashboard</a></li>
+            <li dropdown ng-show="currentUser.isManager">
+                <a dropdown-toggle role="button"><i class="fa fa-cogs"></i> Manager <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a role="button" ui-sref="organization-indicators">Indicators</a></li>
+                    <li><a role="button" ui-sref="groups">Groups</a></li>
+                </ul>
+            </li>
             <li dropdown ng-show="currentUser.isAdmin">
                 <a dropdown-toggle role="button"><i class="fa fa-cogs"></i> Admin <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a role="button" ui-sref="organizations">Organizations</a></li>
                     <li><a role="button" ui-sref="users">Users</a></li>
-                    <li><a role="button" ui-sref="indicators">Indicators</a></li>
-                    <li><a role="button" ui-sref="groups">Groups</a></li>
-                    <li><a role="button" ui-sref="reports">Reports</a></li>
+                    <li><a role="button" ui-sref="global-indicators">Indicators</a></li>
                 </ul>
             </li>
         </ul>

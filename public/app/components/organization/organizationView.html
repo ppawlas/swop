@@ -1,20 +1,30 @@
 <div class="panel panel-primary">
     <!-- Default panel contents -->
-    <div class="panel-heading"><strong>Organizations</strong></div>
+    <div class="panel-heading">
+        <strong>Organizations</strong>&nbsp;
+        <button class="btn btn-xs btn-default " ng-click="organizationList.new()"><i class="fa fa-plus-square"></i> New</button>
+    </div>
 
-    <table class="table table-striped" ng-if="organization.organizations">
+    <div class="alert alert-success" role="alert" ng-show="organizationList.message">{{organizationList.message}}</div>
+    <div class="alert alert-danger" role="alert" ng-show="organizationList.error">{{organizationList.error}}</div>
+
+    <table class="table table-striped" ng-if="organizationList.organizations">
         <thead>
         <tr>
             <th>Code</th>
             <th>Name</th>
             <th>Active</th>
+            <th>System</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr dir-paginate="organization in organization.organizations | itemsPerPage: 10">
+        <tr dir-paginate="organization in organizationList.organizations | itemsPerPage: 10" ng-click="">
             <td>{{organization.code}}</td>
-            <td>{{organization.name}}</td>
-            <td>{{organization.active}}</td>
+            <td><a role="button" ui-sref="organization-edit({organizationId: organization.id})">{{organization.name}}</a></td>
+            <td><input type="checkbox" ng-model="organization.active" disabled></td>
+            <td><input type="checkbox" ng-model="organization.system" disabled></td>
+            <td><button class="btn btn-xs btn-danger " ng-click="organizationList.delete(organization.id)" confirm="Are you sure you want to delete this organization"><i class="fa fa-remove"></i> Delete</button></td>
         </tr>
         </tbody>
     </table>

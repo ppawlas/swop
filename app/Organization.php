@@ -21,6 +21,17 @@ class Organization extends Model
     protected $fillable = ['code', 'name', 'active'];
 
     /**
+     * Return only the publicly visible organizations (active non system).
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeAvailable($query)
+    {
+        return $query->where('active', true)->where('system', false);
+    }
+
+    /**
      * Get the users belonging to the organization.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

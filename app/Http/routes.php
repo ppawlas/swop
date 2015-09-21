@@ -17,9 +17,30 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'api'], function()
 {
-	Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
+
 	Route::post('authenticate', 'AuthenticateController@authenticate');
 	Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
+	Route::get('authenticate/organizations', 'AuthenticateController@getAvailableOrganizations');
 
-    Route::resource('organizations', 'OrganizationController', ['only' => ['index']]);
+    Route::get('admin/organizations', 'OrganizationController@index');
+    Route::post('admin/organizations', 'OrganizationController@store');
+    Route::get('admin/organizations/{id}', 'OrganizationController@show');
+    Route::put('admin/organizations/{id}', 'OrganizationController@update');
+    Route::delete('admin/organizations/{id}', 'OrganizationController@destroy');
+
+    Route::get('admin/users', 'UserController@adminIndex');
+
+    Route::get('admin/indicators', 'IndicatorController@adminIndex');
+
+
+    Route::get('manager/indicators', 'IndicatorController@managerIndex');
+
+    Route::get('manager/groups', 'GroupController@managerIndex');
+    Route::get('manager/groups/{id}', 'GroupController@show');
+
+    Route::get('manager/reports', 'ReportController@managerIndex');
+    Route::get('manager/reports/{id}', 'ReportController@show');
+
+
+
 });

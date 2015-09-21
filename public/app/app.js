@@ -3,7 +3,7 @@
 	'use strict';
 
 	angular
-        .module('authApp', ['ui.router', 'satellizer', 'ui.bootstrap', 'angular-confirm', 'ui.select', 'ngSanitize', 'angularUtils.directives.dirPagination'])
+        .module('authApp', ['ui.router', 'satellizer', 'ui.bootstrap', 'angular-confirm', 'ui.select', 'ngSanitize', 'angularUtils.directives.dirPagination', 'ngAnimate', 'blockUI'])
         .config(function($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, $provide) {
 
             function redirectWhenLoggedOut($q, $injector) {
@@ -67,7 +67,7 @@
                             controller: 'AuthController as auth',
                             resolve: {
                                 organizations: function(OrganizationService) {
-                                    return OrganizationService.getAll();
+                                    return OrganizationService.getAvailable();
                                 }
                             }
                         }
@@ -97,8 +97,20 @@
                             controller: 'NavController as nav'                        }
                     }
                 })
-                .state('indicators', {
-                    url: '/indicators',
+                .state('global-indicators', {
+                    url: '/global-indicators',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/indicator/indicatorView.html',
+                            controller: 'IndicatorController as indicator'
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
+                })
+                .state('organization-indicators', {
+                    url: '/organization-indicators',
                     views: {
                         content: {
                             templateUrl: 'app/components/indicator/indicatorView.html',
@@ -114,10 +126,43 @@
                     views: {
                         content: {
                             templateUrl: 'app/components/organization/organizationView.html',
-                            controller: 'OrganizationController as organization',
+                            controller: 'OrganizationController as organizationList',
                             resolve: {
                                 organizations: function(OrganizationService) {
                                     return OrganizationService.getAll();
+                                }
+                            },
+                            params: {
+                                message: '',
+                                error: ''
+                            }
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
+                })
+                .state('organization-new', {
+                    url: '/organizations/new',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/organization/organizationForm.html',
+                            controller: 'OrganizationNewController as organizationForm'
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
+                })
+                .state('organization-edit', {
+                    url: '/organizations/edit/:organizationId',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/organization/organizationForm.html',
+                            controller: 'OrganizationEditController as organizationForm',
+                            resolve: {
+                                organization: function($stateParams, OrganizationService) {
+                                    return OrganizationService.get($stateParams.organizationId);
                                 }
                             }
                         },

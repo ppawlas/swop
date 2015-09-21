@@ -16,8 +16,8 @@ class CreateReportUser extends Migration
         Schema::create('report_user', function (Blueprint $table) {
             $table->integer('report_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->boolean('view_self')->default(false);;
-            $table->boolean('view_all')->default(false);;
+            $table->boolean('view_self')->default(false);
+            $table->boolean('view_all')->default(false);
             $table->timestamps();
 
             $table->foreign('report_id')->references('id')->on('reports')

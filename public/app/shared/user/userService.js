@@ -11,7 +11,7 @@
 
         UserService.getAll = function() {
             // Return an $http request for all user
-            return $http.get('api/authenticate');
+            return $http.get('api/admin/users');
         };
 
         return UserService;

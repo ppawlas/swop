@@ -21,6 +21,7 @@ class FakeSeeder extends Seeder
     {
         Model::unguard();
 
+        DB::table('results')->delete();
         DB::table('group_indicator')->delete();
         DB::table('group_user')->delete();
         DB::table('indicator_organization')->delete();
@@ -46,7 +47,7 @@ class FakeSeeder extends Seeder
         $faker = Faker::create();
 
 
-        foreach(range(1, 10) as $index) {
+        foreach(range(1, 5) as $index) {
             Indicator::create([
                 'name' => $faker->sentence(3),
                 'function_name' => $faker->numerify($faker->sentence(3) . '###'),
@@ -56,7 +57,7 @@ class FakeSeeder extends Seeder
             ]);
         }
 
-        foreach(range(1, 20) as $index) {
+        foreach(range(1, 5) as $index) {
             $organization = Organization::create([
                 'code' => $faker->randomNumber(6),
                 'name' => $faker->company,
@@ -64,12 +65,12 @@ class FakeSeeder extends Seeder
             ]);
 
             foreach(Indicator::all() as $indicator) {
-                $organization->indicators()->attach($indicator->id, ['coefficient' => $faker->randomFloat(3, 0, 1)]);
+                $organization->indicators()->attach($indicator->id, ['coefficient' => $faker->randomFloat(3, 0, 10)]);
             }
 
         }
 
-        foreach(range(1, 200) as $index) {
+        foreach(range(1, 100) as $index) {
             $organization = Organization::all()->random(1);
 
             $user = User::create([
@@ -86,7 +87,7 @@ class FakeSeeder extends Seeder
         }
 
         foreach(Organization::all() as $organization) {
-            foreach(range(1, rand(5, 25)) as $index) {
+            foreach(range(1, rand(5, 10)) as $index) {
                 $group = Group::create([
                     'organization_id' => $organization->id,
                     'name' => $faker->sentence(3)
@@ -97,7 +98,7 @@ class FakeSeeder extends Seeder
                     $group->users()->attach($user->id);
                 }
 
-                $indicators = Indicator::all()->random(rand(3,6));
+                $indicators = Indicator::all()->random(rand(2,5));
                 foreach ($indicators as $indicator) {
                     $group->indicators()->attach($indicator->id);
                 }
@@ -109,16 +110,16 @@ class FakeSeeder extends Seeder
         })->get();
 
         foreach($managers as $manager) {
-            foreach(range(1, rand(5, 10)) as $index) {
+            foreach(range(1, rand(3, 6)) as $index) {
                 $endDate = $faker->date('Y-m-d');
                 $report = Report::create([
-                    'user_id' => $manager->id,
+                    'owner_id' => $manager->id,
                     'name' => $faker->sentence(4),
                     'start_date' => $faker->date('Y-m-d', $endDate),
                     'end_date' => $endDate
                 ]);
 
-                $indicators = Indicator::all()->random(rand(3,6));
+                $indicators = Indicator::all()->random(rand(2,5));
                 foreach ($indicators as $indicator) {
                     $report->indicators()->attach($indicator->id, ['show_value' => $faker->boolean(), 'show_points' => $faker->boolean()]);
                 }

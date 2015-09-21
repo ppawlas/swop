@@ -1,0 +1,24 @@
+[ui-view].content.ng-enter, [ui-view].content.ng-leave {
+    -webkit-transition: 0.5s ease-in-out all;
+    -moz-transition: 0.5s ease-in-out all;
+    -o-transition: 0.5s ease-in-out all;
+    transition: 0.5s ease-in-out all;
+}
+
+[ui-view].content.ng-enter {
+    opacity: 0;
+}
+
+[ui-view].content.ng-enter-active {
+    opacity: 1;
+}
+
+[ui-view].content.ng-leave {
+    opacity: 1;
+    height: 0;
+    overflow: hidden;
+}
+
+[ui-view].content.ng-leave-active {
+    opacity: 0;
+}

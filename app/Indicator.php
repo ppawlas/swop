@@ -57,4 +57,14 @@ class Indicator extends Model
         return $this->belongsToMany('App\Report')->withPivot('show_value', 'show_points')->withTimestamps();
     }
 
+    /**
+     * Get the results belonging to the indicator.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function results()
+    {
+        return $this->hasMany('App\Result');
+    }
+
 }
