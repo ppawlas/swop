@@ -90,19 +90,72 @@
                     views: {
                         content: {
                             templateUrl: 'app/components/group/groupView.html',
-                            controller: 'GroupController as group'
+                            controller: 'GroupController as groupList',
+                            resolve: {
+                                groups: function(GroupService) {
+                                    return GroupService.getAll();
+                                }
+                            }
                         },
                         navbar: {
                             templateUrl: 'app/components/nav/navView.html',
                             controller: 'NavController as nav'                        }
                     }
                 })
-                .state('global-indicators', {
-                    url: '/global-indicators',
+                .state('group-new', {
+                    url: '/groups/new',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/group/groupForm.html',
+                            controller: 'GroupNewController as groupForm',
+                            resolve: {
+                                users: function(UserService) {
+                                    return UserService.getForOrganization();
+                                },
+                                indicators: function(IndicatorService) {
+                                    return IndicatorService.getForOrganization();
+                                }
+                            }
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
+                })
+                .state('group-edit', {
+                    url: '/groups/edit/:groupId',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/group/groupForm.html',
+                            controller: 'GroupEditController as groupForm',
+                            resolve: {
+                                group: function($stateParams, GroupService) {
+                                    return GroupService.get($stateParams.groupId);
+                                },
+                                users: function(UserService) {
+                                    return UserService.getForOrganization();
+                                },
+                                indicators: function(IndicatorService) {
+                                    return IndicatorService.getForOrganization();
+                                }
+                            }
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
+                })
+                .state('admin-indicators', {
+                    url: '/admin-indicators',
                     views: {
                         content: {
                             templateUrl: 'app/components/indicator/indicatorView.html',
-                            controller: 'IndicatorController as indicator'
+                            controller: 'IndicatorController as indicatorList',
+                            resolve: {
+                                indicators: function(IndicatorService) {
+                                    return IndicatorService.getAll();
+                                }
+                            }
                         },
                         navbar: {
                             templateUrl: 'app/components/nav/navView.html',
@@ -114,7 +167,12 @@
                     views: {
                         content: {
                             templateUrl: 'app/components/indicator/indicatorView.html',
-                            controller: 'IndicatorController as indicator'
+                            controller: 'IndicatorController as indicatorList',
+                            resolve: {
+                                indicators: function(IndicatorService) {
+                                    return IndicatorService.getForOrganization();
+                                }
+                            }
                         },
                         navbar: {
                             templateUrl: 'app/components/nav/navView.html',
@@ -131,10 +189,6 @@
                                 organizations: function(OrganizationService) {
                                     return OrganizationService.getAll();
                                 }
-                            },
-                            params: {
-                                message: '',
-                                error: ''
                             }
                         },
                         navbar: {
@@ -176,7 +230,98 @@
                     views: {
                         content: {
                             templateUrl: 'app/components/report/reportView.html',
-                            controller: 'ReportController as report'
+                            controller: 'ReportController as reportList',
+                            resolve: {
+                                reports: function(ReportService) {
+                                    return ReportService.getAll();
+                                }
+                            }
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
+                })
+                .state('report-new', {
+                    url: '/reports/new',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/report/reportForm.html',
+                            controller: 'ReportNewController as reportForm',
+                            resolve: {
+                                users: function(UserService) {
+                                    return UserService.getForOrganization();
+                                },
+                                indicators: function(IndicatorService) {
+                                    return IndicatorService.getForOrganization();
+                                },
+                                groups: function(GroupService) {
+                                    return GroupService.getAll();
+                                }
+                            }
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
+                })
+                .state('report-edit', {
+                    url: '/reports/edit/:reportId',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/report/reportForm.html',
+                            controller: 'ReportEditController as reportForm',
+                            resolve: {
+                                report: function($stateParams, ReportService) {
+                                    return ReportService.get($stateParams.reportId);
+                                },
+                                users: function(UserService) {
+                                    return UserService.getForOrganization();
+                                },
+                                indicators: function(IndicatorService) {
+                                    return IndicatorService.getForOrganization();
+                                },
+                                groups: function(GroupService) {
+                                    return GroupService.getAll();
+                                }
+                            }
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
+                })
+                .state('report-preview', {
+                    url: '/reports/preview/:reportId',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/report/reportResults.html',
+                            controller: 'ReportPreviewController as reportResults',
+                            resolve: {
+                                report: function($stateParams, ReportService) {
+                                    return ReportService.get($stateParams.reportId);
+                                }
+                            }
+                        },
+                        navbar: {
+                            templateUrl: 'app/components/nav/navView.html',
+                            controller: 'NavController as nav'                        }
+                    }
+                })
+                .state('report-view', {
+                    url: '/reports/view/:reportId',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/report/reportResults.html',
+                            controller: 'ReportViewController as reportResults',
+                            resolve: {
+                                report: function($stateParams, ReportService) {
+                                    return ReportService.get($stateParams.reportId);
+                                },
+                                results: function($stateParams, ReportService) {
+                                    return ReportService.getResults($stateParams.reportId);
+                                }
+                            }
                         },
                         navbar: {
                             templateUrl: 'app/components/nav/navView.html',

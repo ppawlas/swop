@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Report;
+use App\Result;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\CreateReportRequest;
 
 class ReportController extends Controller
 {
@@ -29,8 +32,40 @@ class ReportController extends Controller
             abort(403);
         }
 
-        // Retrieve all the groups defined for the organization of the currently authenticated manager
+        // Retrieve all the report defined for the organization of the currently authenticated manager
         return Auth::user()->myReports;
+    }
+
+    public function store(CreateReportRequest $request)
+    {
+        if (Gate::denies('managerOnly')) {
+            abort(403);
+        }
+
+        $input = $request->all();
+
+        $result = DB::transaction(function($input) use($input) {
+            $report = new Report();
+            $report->name = $input['name'];
+            $report->start_date = $input['start_date'];
+            $report->end_date = $input['end_date'];
+
+            $report->owner()->associate(Auth::user());
+
+            $report->save();
+
+            foreach($input['users'] as $user) {
+                $report->users()->attach($user['id']);
+            }
+
+            foreach($input['indicators'] as $indicator) {
+                $report->indicators()->attach($indicator['id']);
+            }
+
+            return $report;
+        });
+
+        return $result;
     }
 
     public function show($id)
@@ -40,5 +75,72 @@ class ReportController extends Controller
         $this->authorize($report);
 
         return $report;
+    }
+
+    public function results($id)
+    {
+        $report = Report::with('users', 'indicators')->find($id);
+
+        $this->authorize($report);
+
+        $results = Result::whereHas('report', function($report) use($id) {
+            $report->where('id', $id);
+        })->get();
+
+        return $results;
+    }
+
+    public function update(Request $request, $id)
+    {
+        if (Gate::denies('managerOnly')) {
+            abort(403);
+        }
+
+        $input = $request->all();
+
+        $result = DB::transaction(function($input) use($input, $id) {
+            $report = Report::find($id);
+
+            if ($report) {
+                $report->name = $input['name'];
+                $report->start_date = $input['start_date'];
+                $report->end_date = $input['end_date'];
+
+                $report->users()->detach();
+                foreach($input['users'] as $user) {
+                    $report->users()->attach(
+                        $user['id'], [
+                            'view_self' => $user['pivot']['view_self'],
+                            'view_all' => $user['pivot']['view_all']
+                        ]
+                    );
+                }
+
+                $report->indicators()->detach();
+                foreach($input['indicators'] as $indicator) {
+                    $report->indicators()->attach(
+                        $indicator['id'], [
+                            'show_value' => $indicator['pivot']['show_value'],
+                            'show_points' => $indicator['pivot']['show_points'],
+                        ]
+                    );
+                }
+            }
+
+            $report->save();
+
+            return $report;
+        });
+
+        return $result;
+    }
+
+    public function destroy($id)
+    {
+        if (Gate::denies('managerOnly')) {
+            abort(403);
+        }
+
+        return Report::destroy($id);
     }
 }

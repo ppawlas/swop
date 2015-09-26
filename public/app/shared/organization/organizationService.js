@@ -28,17 +28,17 @@
         OrganizationService.update = function(organizationId, organization) {
             // Return an $http request for updating selected organization
             return $http.put('api/admin/organizations/' + organizationId, organization);
-        }
+        };
 
         OrganizationService.create = function(organization) {
             // Return an $http request for creating new organization
             return $http.post('api/admin/organizations', organization);
-        }
+        };
 
         OrganizationService.delete = function(organizationId) {
             // Return an $http request for deleting selected organization
             return $http.delete('api/admin/organizations/' + organizationId);
-        }
+        };
 
         return OrganizationService;
     }

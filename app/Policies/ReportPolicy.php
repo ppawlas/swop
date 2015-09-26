@@ -11,4 +11,9 @@ class ReportPolicy
     {
         return $user->hasRole('manager') && ($user->id === $report->owner->id);
     }
+
+    public function results(User $user, Report $report)
+    {
+        return $user->hasRole('manager') && ($user->id === $report->owner->id);
+    }
 }

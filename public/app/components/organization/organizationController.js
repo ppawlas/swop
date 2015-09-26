@@ -6,18 +6,18 @@
         .module('authApp')
         .controller('OrganizationController', OrganizationController);
 
-    function OrganizationController($state, $stateParams, organizations, OrganizationService) {
+    function OrganizationController($state, organizations, OrganizationService, MessageService) {
 
         var vm = this;
 
-        vm.message = $stateParams.message;
-        vm.error = $stateParams.error;
+        vm.message = MessageService.getMessage();
+        vm.error = '';
 
         vm.organizations = organizations.data;
 
         vm.new = function() {
             $state.go('organization-new');
-        }
+        };
 
         vm.delete = function(organizationId) {
             OrganizationService.delete(organizationId).then(function(response) {
@@ -30,7 +30,7 @@
                 vm.message = '';
                 vm.error = 'Data has not been removed successfully'
             });
-        }
+        };
 
     }
 

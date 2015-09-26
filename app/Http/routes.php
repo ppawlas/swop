@@ -32,14 +32,22 @@ Route::group(['prefix' => 'api'], function()
 
     Route::get('admin/indicators', 'IndicatorController@adminIndex');
 
+    Route::get('manager/users', 'UserController@managerIndex');
 
     Route::get('manager/indicators', 'IndicatorController@managerIndex');
 
     Route::get('manager/groups', 'GroupController@managerIndex');
+    Route::post('manager/groups', 'GroupController@store');
     Route::get('manager/groups/{id}', 'GroupController@show');
+    Route::put('manager/groups/{id}', 'GroupController@update');
+    Route::delete('manager/groups/{id}', 'GroupController@destroy');
 
     Route::get('manager/reports', 'ReportController@managerIndex');
+    Route::post('manager/reports', 'ReportController@store');
     Route::get('manager/reports/{id}', 'ReportController@show');
+    Route::get('manager/reports/{id}/results', 'ReportController@results');
+    Route::put('manager/reports/{id}', 'ReportController@update');
+    Route::delete('manager/reports/{id}', 'ReportController@destroy');
 
 
 

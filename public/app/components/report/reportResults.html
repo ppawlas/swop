@@ -1,0 +1,52 @@
+<div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <strong>{{reportResults.title}}</strong>
+    </div>
+
+    <div class="table-responsive">
+
+        <div class="well">
+            <h5><strong>Name:</strong> {{reportResults.report.name}}</h5>
+            <h5><strong>Start date:</strong> {{reportResults.report.start_date | date:'yyyy-MM-dd'}}</h5>
+            <h5><strong>End date:</strong> {{reportResults.report.end_date | date:'yyyy-MM-dd'}}</h5>
+        </div>
+
+        <table class="table table-bordered table-hover" ng-if="reportResults.report">
+            <thead>
+            <tr>
+                <th rowspan="2">#</th>
+                <th rowspan="2">Name</th>
+                <th colspan="{{indicatorColumn.colspan}}" ng-repeat="indicatorColumn in reportResults.indicatorsColumns">
+                    {{indicatorColumn.name}}
+                </th>
+            </tr>
+            <tr>
+                <th ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
+                    {{indicatorsPivotColumn.type}}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in reportResults.report.users">
+                <td><strong>{{$index}}</strong></td>
+                <td>{{user.name}} {{user.surname}}</td>
+                <td ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
+                    {{reportResults.userResults[user.id][indicatorsPivotColumn.id][indicatorsPivotColumn.type]}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="well">
+        <h4>Legend</h4>
+        <h5 ng-repeat="indicatorColumn in reportResults.indicatorsColumns"><strong>{{indicatorColumn.name}}:</strong> {{indicatorColumn.description}}</h5>
+    </div>
+
+    <div class="panel-footer">
+        <p><a role="button" ui-sref="report-edit({reportId: reportResults.report.id})"><i class="fa fa-arrow-circle-left"></i> Report details</a></p>
+        <p><a role="button" ui-sref="reports"><i class="fa fa-arrow-circle-left"></i> Reports</a></p>
+    </div>
+
+</div>

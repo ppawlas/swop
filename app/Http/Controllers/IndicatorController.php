@@ -39,7 +39,7 @@ class IndicatorController extends Controller
             abort(403);
         }
 
-        // Retrieve all the groups defined for the organization of the currently authenticated manager
+        // Retrieve all the indicators defined for the organization of the currently authenticated manager
         return Auth::user()->organization->indicators;
     }
 }

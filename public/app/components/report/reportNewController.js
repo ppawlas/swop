@@ -1,0 +1,136 @@
+(function() {
+
+    'use strict';
+
+    angular
+        .module('authApp')
+        .controller('ReportNewController', ReportNewController);
+
+    function ReportNewController($state, users, indicators, groups, ReportService, MessageService, GroupService) {
+
+        var vm = this;
+
+        vm.title = 'New report';
+        vm.report = {
+            users: [],
+            indicators: []
+        };
+        vm.users = users.data;
+        vm.indicators = indicators.data;
+        vm.groups = groups.data;
+        vm.group;
+
+        vm.datepicker = {
+            status: {
+                opened: false
+            },
+            options: {
+                startingDay: 1
+            },
+            open: function ($event) {
+                vm.datepicker.status.opened = true;
+            }
+        }
+
+        vm.alerts = [];
+
+        vm.closeAlert = function(index) {
+            vm.alerts.splice(index, 1);
+        };
+
+        vm.addUser = function(index) {
+            vm.report.users.push(vm.users[index]);
+            vm.users.splice(index, 1);
+        };
+
+        vm.removeUser = function(index) {
+            vm.users.push(vm.report.users[index]);
+            vm.report.users.splice(index, 1);
+        };
+
+        vm.addIndicator = function(index) {
+            vm.report.indicators.push(vm.indicators[index]);
+            vm.indicators.splice(index, 1);
+        };
+
+        vm.removeIndicator = function(index) {
+            vm.indicators.push(vm.report.indicators[index]);
+            vm.report.indicators.splice(index, 1);
+        };
+
+        vm.toggleGroupPanel = function() {
+            vm.groupPanel = !vm.groupPanel;
+        };
+
+        vm.loadGroup = function() {
+            GroupService.get(vm.group.id).then(function(response) {
+                vm.report.users = response.data.users;
+                vm.report.indicators = response.data.indicators;
+
+                vm.users = ReportService.helpers.filterUsers(vm.report, users.data);
+                vm.indicators = ReportService.helpers.filterIndicators(vm.report, indicators.data);
+
+                vm.alerts.push({ type: 'success', msg: 'Group has been loaded successfully' });
+            }, function(error) {
+                vm.alerts.push({ type: 'danger', msg: 'Group has not been loaded successfully' });
+            })
+        };
+
+        vm.saveGroup = function() {
+            var group = {};
+            angular.copy(vm.group, group);
+            group.users = vm.report.users;
+            group.indicators = vm.report.indicators;
+
+            GroupService.update(group.id, group).then(function(response) {
+                vm.alerts.push({ type: 'success', msg: 'Group has been saved successfully' });
+            }, function(error) {
+                vm.alerts.push({ type: 'danger', msg: 'Group has not been saved successfully' });
+            });
+        };
+
+        vm.saveNewGroup = function() {
+            var group = {};
+            group.name = vm.newGroupName;
+            group.users = vm.report.users;
+            group.indicators = vm.report.indicators;
+
+            GroupService.create(group).then(function(response) {
+                vm.alerts.push({ type: 'success', msg: 'Group has been saved successfully' });
+                GroupService.getAll().then(function(response) {
+                    vm.groups = response.data;
+                });
+            }, function(error) {
+                vm.alerts.push({ type: 'danger', msg: 'Group has not been saved successfully' });
+            });
+        };
+
+        vm.save = function(callback) {
+            ReportService.create(vm.report).then(function(response) {
+
+                if (callback) {
+                    callback(response);
+                } else {
+                    MessageService.setMessage('Data has been saved successfully');
+                    $state.go('reports');
+                }
+
+            }, function(error) {
+                vm.alerts.push({ type: 'danger', msg: 'Data has not been saved successfully' });
+            });
+        };
+
+        vm.preview = function() {
+            vm.save(function(response) {
+                $state.go('report-preview', { reportId: response.data.id });
+            });
+        };
+
+        vm.view = function() {
+            vm.save(function(response) {
+                $state.go('report-view', { reportId: response.data.id });
+            });
+        };
+    }
+
+})();

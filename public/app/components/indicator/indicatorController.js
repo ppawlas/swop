@@ -6,10 +6,11 @@
         .module('authApp')
         .controller('IndicatorController', IndicatorController);
 
-    function IndicatorController() {
+    function IndicatorController(indicators) {
 
         var vm = this;
 
+        vm.indicators = indicators.data;
     }
 
 })();

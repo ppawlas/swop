@@ -9,8 +9,9 @@
             <li dropdown ng-show="currentUser.isManager">
                 <a dropdown-toggle role="button"><i class="fa fa-cogs"></i> Manager <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a role="button" ui-sref="organization-indicators">Indicators</a></li>
+                    <li><a role="button" ui-sref="reports">Reports</a></li>
                     <li><a role="button" ui-sref="groups">Groups</a></li>
+                    <li><a role="button" ui-sref="organization-indicators">Indicators</a></li>
                 </ul>
             </li>
             <li dropdown ng-show="currentUser.isAdmin">
@@ -18,14 +19,14 @@
                 <ul class="dropdown-menu" role="menu">
                     <li><a role="button" ui-sref="organizations">Organizations</a></li>
                     <li><a role="button" ui-sref="users">Users</a></li>
-                    <li><a role="button" ui-sref="global-indicators">Indicators</a></li>
+                    <li><a role="button" ui-sref="admin-indicators">Indicators</a></li>
                 </ul>
             </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
             <li><a role="button">Signed in as {{currentUser.name}} {{currentUser.surname}} ({{currentUser.role.display_name}})</a></li>
-            <li><a role="button" ng-click="nav.logout()" confirm="Are you sure you want to logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+            <li><a role="button" ng-click="nav.logout()" confirm="Are you sure you want to logout?"><i class="fa fa-sign-out"></i> Logout</a></li>
         </ul>
     </div>
 </nav>
