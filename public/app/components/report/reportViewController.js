@@ -17,7 +17,7 @@
         vm.report = ReportService.helpers.preprocess(report.data);
         vm.indicatorsColumns = ReportService.helpers.getIndicatorsColumns(report.data);
         vm.indicatorsPivotColumns = ReportService.helpers.getIndicatorsPivotColumns(report.data);
-        vm.userResults = ReportService.helpers.getUserResults(report.data, results.data);
+        vm.userResults = ReportService.helpers.getUserResults(results.data);
 
     }
 

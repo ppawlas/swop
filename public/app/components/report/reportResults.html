@@ -8,8 +8,8 @@
 
         <div class="well">
             <h5><strong>Name:</strong> {{reportResults.report.name}}</h5>
-            <h5><strong>Start date:</strong> {{reportResults.report.start_date | date:'yyyy-MM-dd'}}</h5>
-            <h5><strong>End date:</strong> {{reportResults.report.end_date | date:'yyyy-MM-dd'}}</h5>
+            <h5><strong>Reporting period:</strong> {{reportResults.report.start_date | date:'yyyy-MM-dd'}} - {{reportResults.report.end_date | date:'yyyy-MM-dd'}}</h5>
+            <h5><strong>Evaluated at:</strong> {{reportResults.report.evaluated_at | date:'yyyy-MM-dd hh:mm:ss'}}</h5>
         </div>
 
         <table class="table table-bordered table-hover" ng-if="reportResults.report">

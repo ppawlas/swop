@@ -46,7 +46,14 @@
             <div class="form-group">
                 <label for="name" class="col-sm-1 control-label">Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" placeholder="Name" ng-model="reportForm.report.name">
+                    <input type="text" class="form-control" id="name" placeholder="Name" ng-model="reportForm.report.name" ng-required="true">
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="reportForm.report.evaluated_at">
+                <label for="evaluatedAt" class="col-sm-1 control-label">Evaluated at</label>
+                <div class="col-sm-10">
+                    <input type="datetime-local" ng-disabled="true" class="form-control" id="evaluatedAt" ng-model="reportForm.report.evaluated_at">
                 </div>
             </div>
 
@@ -104,6 +111,22 @@
                                         <td><button class="btn btn-xs btn-danger pull-right" ng-click="reportForm.removeUser($index)"><i class="fa fa-minus"></i></button></td>
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td><strong>Toggle all</strong></td>
+                                    <td>
+                                        <button class="btn btn-xs bg-plain" ng-click="reportForm.toggles.users.self.toggle()">
+                                            <i ng-class="['fa', {'fa-toggle-on': reportForm.toggles.users.self.state, 'fa-toggle-off': !reportForm.toggles.users.self.state}]"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-xs bg-plain" ng-click="reportForm.toggles.users.all.toggle()">
+                                            <i ng-class="['fa', {'fa-toggle-on': reportForm.toggles.users.all.state, 'fa-toggle-off': !reportForm.toggles.users.all.state}]"></i>
+                                        </button>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                </tfoot>
                             </table>
                         </accordion-group>
 
@@ -146,6 +169,22 @@
                                         <td><button class="btn btn-xs btn-danger pull-right" ng-click="reportForm.removeIndicator($index)"><i class="fa fa-minus"></i></button></td>
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td><strong>Toggle all</strong></td>
+                                        <td>
+                                            <button class="btn btn-xs bg-plain" ng-click="reportForm.toggles.indicators.value.toggle()">
+                                                <i ng-class="['fa', {'fa-toggle-on': reportForm.toggles.indicators.value.state, 'fa-toggle-off': !reportForm.toggles.indicators.value.state}]"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-xs bg-plain" ng-click="reportForm.toggles.indicators.points.toggle()">
+                                            <i ng-class="['fa', {'fa-toggle-on': reportForm.toggles.indicators.points.state, 'fa-toggle-off': !reportForm.toggles.indicators.points.state}]"></i>
+                                            </button>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </accordion-group>
 
@@ -170,8 +209,9 @@
                 <div class="col-sm-offset-1 col-sm-10">
                     <button class="btn btn-primary" ng-click="reportForm.save()"><i class="fa fa-upload"></i> Save</button>
                     <button class="btn btn-primary" ng-click="reportForm.preview()"><i class="fa fa-search"></i> Preview template</button>
-                    <button class="btn btn-primary" ng-disabled="!reportForm.report.evaluated_at" ng-click="reportForm.view()"><i class="fa fa-search-plus"></i> View results</button>
-                    <button class="btn btn-primary" ng-click="reportForm.generate()"><i class="fa fa-cog"></i> Generate</button>
+                    <button ng-class="['btn', {'btn-warning': !reportForm.report.evaluated_at, 'btn-success': reportForm.report.evaluated_at}]" ng-disabled="!reportForm.report.evaluated_at" ng-click="reportForm.view()"><i class="fa fa-table"></i> View results</button>
+                    <button class="btn btn-warning" ng-show="reportForm.report.evaluated_at" ng-click="reportForm.generate()" confirm="Are you sure you want to recalculate this report? Previous results will be lost."><i class="fa fa-cog"></i> Generate</button>
+                    <button class="btn btn-success" ng-hide="reportForm.report.evaluated_at" ng-click="reportForm.generate()"><i class="fa fa-cog"></i> Generate</button>
                 </div>
             </div>
 

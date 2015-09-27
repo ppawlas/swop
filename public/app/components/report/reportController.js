@@ -32,6 +32,15 @@
             });
         };
 
+        vm.generate = function(reportId) {
+            ReportService.generate(reportId).then(function(response) {
+                $state.go('report-view', { reportId: reportId });
+            }, function(error) {
+                vm.message = '';
+                vm.error = 'Report has not been generated successfully';
+            });
+        };
+
     }
 
 })();

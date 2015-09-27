@@ -55,7 +55,7 @@
 	<script src="app/shared/indicator/indicatorService.js"></script>
 	<script src="app/shared/group/groupService.js"></script>
 	<script src="app/shared/report/reportService.js"></script>
-	<script src="app/shared/message/messageService.js"></script>
+	<script src="app/shared/helper/messageService.js"></script>
 	<script src="app/shared/user/userService.js"></script>
 	<script src="app/shared/auth/authService.js"></script>
 </html>

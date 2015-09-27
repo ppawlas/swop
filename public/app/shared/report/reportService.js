@@ -24,6 +24,11 @@
             return $http.get('api/manager/reports/' + reportId + '/results');
         };
 
+        ReportService.generate = function(reportId) {
+            // Return an $http request for generating report results
+            return $http.post('api/manager/reports/' + reportId + '/evaluate');
+        }
+
         ReportService.update = function(reportId, report) {
             // Return an $http request for updating selected report
             return $http.put('api/manager/reports/' + reportId, ReportService.helpers.postprocess(report));
@@ -72,6 +77,7 @@
          * @returns prepared Report object
          */
         ReportService.helpers.preprocess = function(report) {
+            report.evaluated_at = report.evaluated_at ? new Date(report.evaluated_at) : null;
             report.start_date = new Date(report.start_date);
             report.end_date = new Date(report.end_date);
 
@@ -100,6 +106,12 @@
             return report;
         };
 
+        /**
+         * Get the data about indicators display properties used in the given report
+         * for the purpose of creating results table.
+         * @param report Report object
+         * @returns {Array.<T>}
+         */
         ReportService.helpers.getIndicatorsColumns = function(report) {
 
             return report.indicators.map(function(indicator) {
@@ -125,6 +137,12 @@
 
         };
 
+        /**
+         * Get the data about indicators value and point columns
+         * that should be displayed in the given report.
+         * @param report Report object
+         * @returns {Array.<T>}
+         */
         ReportService.helpers.getIndicatorsPivotColumns = function(report) {
 
             return [].concat.apply([], report.indicators.map(function(indicator) {
@@ -149,7 +167,13 @@
 
         };
 
-        ReportService.helpers.getUserResults = function(report, results) {
+        /**
+         * Transform the array of Result object into nested object
+         * grouping results by users and then by indicators.
+         * @param results Results objects array
+         * @returns {{}} results grouped by users and indicators
+         */
+        ReportService.helpers.getUserResults = function(results) {
             var userResults = {};
 
             results.forEach(function(result) {

@@ -44,8 +44,9 @@ Route::group(['prefix' => 'api'], function()
 
     Route::get('manager/reports', 'ReportController@managerIndex');
     Route::post('manager/reports', 'ReportController@store');
-    Route::get('manager/reports/{id}', 'ReportController@show');
+    Route::post('manager/reports/{id}/evaluate', 'ReportController@evaluate');
     Route::get('manager/reports/{id}/results', 'ReportController@results');
+    Route::get('manager/reports/{id}', 'ReportController@show');
     Route::put('manager/reports/{id}', 'ReportController@update');
     Route::delete('manager/reports/{id}', 'ReportController@destroy');
 
