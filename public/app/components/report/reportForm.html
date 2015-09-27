@@ -114,16 +114,8 @@
                                 <tfoot>
                                 <tr>
                                     <td><strong>Toggle all</strong></td>
-                                    <td>
-                                        <button class="btn btn-xs bg-plain" ng-click="reportForm.toggles.users.self.toggle()">
-                                            <i ng-class="['fa', {'fa-toggle-on': reportForm.toggles.users.self.state, 'fa-toggle-off': !reportForm.toggles.users.self.state}]"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-xs bg-plain" ng-click="reportForm.toggles.users.all.toggle()">
-                                            <i ng-class="['fa', {'fa-toggle-on': reportForm.toggles.users.all.state, 'fa-toggle-off': !reportForm.toggles.users.all.state}]"></i>
-                                        </button>
-                                    </td>
+                                    <td><input type="checkbox" ng-model="reportForm.toggles.users.self.state" ng-change="reportForm.toggles.users.self.toggle()"></td>
+                                    <td><input type="checkbox" ng-model="reportForm.toggles.users.all.state" ng-change="reportForm.toggles.users.all.toggle()"></td>
                                     <td></td>
                                 </tr>
                                 </tfoot>
@@ -172,16 +164,8 @@
                                 <tfoot>
                                     <tr>
                                         <td><strong>Toggle all</strong></td>
-                                        <td>
-                                            <button class="btn btn-xs bg-plain" ng-click="reportForm.toggles.indicators.value.toggle()">
-                                                <i ng-class="['fa', {'fa-toggle-on': reportForm.toggles.indicators.value.state, 'fa-toggle-off': !reportForm.toggles.indicators.value.state}]"></i>
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-xs bg-plain" ng-click="reportForm.toggles.indicators.points.toggle()">
-                                            <i ng-class="['fa', {'fa-toggle-on': reportForm.toggles.indicators.points.state, 'fa-toggle-off': !reportForm.toggles.indicators.points.state}]"></i>
-                                            </button>
-                                        </td>
+                                        <td><input type="checkbox" ng-model="reportForm.toggles.indicators.value.state" ng-change="reportForm.toggles.indicators.value.toggle()"></td>
+                                        <td><input type="checkbox" ng-model="reportForm.toggles.indicators.points.state" ng-change="reportForm.toggles.indicators.points.toggle()"></td>
                                         <td></td>
                                     </tr>
                                 </tfoot>

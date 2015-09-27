@@ -37,8 +37,8 @@
                 self: {
                     state: false,
                     toggle: function() {
-                        vm.toggles.users.self.state = !vm.toggles.users.self.state
                         vm.report.users.forEach(function (user) {
+                            user.pivot = user.pivot || {};
                             user.pivot.view_self = vm.toggles.users.self.state;
                         });
                     }
@@ -46,8 +46,8 @@
                 all: {
                     state: false,
                     toggle: function() {
-                        vm.toggles.users.all.state = !vm.toggles.users.all.state
                         vm.report.users.forEach(function (user) {
+                            user.pivot = user.pivot || {};
                             user.pivot.view_all = vm.toggles.users.all.state;
                         });
                     }
@@ -57,7 +57,6 @@
                 value: {
                     state: false,
                     toggle: function() {
-                        vm.toggles.indicators.value.state = !vm.toggles.indicators.value.state
                         vm.report.indicators.forEach(function (indicator) {
                             indicator.pivot.show_value = vm.toggles.indicators.value.state;
                         });
@@ -66,7 +65,6 @@
                 points: {
                     state: false,
                     toggle: function() {
-                        vm.toggles.indicators.points.state = !vm.toggles.indicators.points.state
                         vm.report.indicators.forEach(function (indicator) {
                             indicator.pivot.show_points = vm.toggles.indicators.points.state;
                         });
