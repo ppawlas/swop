@@ -45,6 +45,7 @@ Route::group(['prefix' => 'api'], function()
     Route::get('manager/reports', 'ReportController@managerIndex');
     Route::post('manager/reports', 'ReportController@store');
     Route::post('manager/reports/{id}/evaluate', 'ReportController@evaluate');
+    Route::post('manager/reports/{id}/reset', 'ReportController@reset');
     Route::get('manager/reports/{id}/results', 'ReportController@results');
     Route::get('manager/reports/{id}', 'ReportController@show');
     Route::put('manager/reports/{id}', 'ReportController@update');

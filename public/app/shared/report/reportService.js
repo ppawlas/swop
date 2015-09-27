@@ -27,7 +27,12 @@
         ReportService.generate = function(reportId) {
             // Return an $http request for generating report results
             return $http.post('api/manager/reports/' + reportId + '/evaluate');
-        }
+        };
+
+        ReportService.reset = function(reportId) {
+            // Return an $http request for resetting report results
+            return $http.post('api/manager/reports/' + reportId + '/reset');
+        };
 
         ReportService.update = function(reportId, report) {
             // Return an $http request for updating selected report
@@ -187,6 +192,39 @@
             });
 
             return userResults;
+        };
+
+        /**
+         * Check if any of report's critical parameters (influencing results)
+         * is changed.
+         * @param previous initial Report object
+         * @param current possibly changed Report object
+         * @returns {boolean} deep comparison result
+         */
+        ReportService.helpers.isReportChanged = function(previous, current) {
+
+            var getId = function(obj) {
+                return obj.id;
+            };
+
+            if ((new Date(previous.start_date)).getTime() !== (new Date (current.start_date)).getTime()) {
+                return true;
+            }
+
+            if ((new Date(previous.end_date)).getTime() !== (new Date (current.end_date)).getTime()) {
+                return true;
+            }
+
+            if (! angular.equals(previous.users.map(getId), current.users.map(getId))) {
+                return true;
+            }
+
+            if (! angular.equals(previous.indicators.map(getId), current.indicators.map(getId))) {
+                return true;
+            }
+
+            return false;
+
         };
 
 

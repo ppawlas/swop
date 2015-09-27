@@ -6,12 +6,12 @@
         .module('authApp')
         .controller('ReportEditController', ReportEditController);
 
-    function ReportEditController($state, report, users, indicators, groups, ReportService, MessageService, GroupService) {
+    function ReportEditController($state, $confirm, report, users, indicators, groups, ReportService, MessageService, GroupService) {
 
         var vm = this;
 
         vm.title = 'Report details';
-        vm.report = ReportService.helpers.preprocess(report.data);
+        vm.report = ReportService.helpers.preprocess(angular.copy(report.data));
         vm.users = ReportService.helpers.filterUsers(report.data, users.data);
         vm.indicators = ReportService.helpers.filterIndicators(report.data, indicators.data);
         vm.groups = groups.data;
@@ -144,18 +144,34 @@
         };
 
         vm.save = function(callback) {
-            ReportService.update(vm.report.id, vm.report).then(function(response) {
+            var save = function() {
+                ReportService.update(vm.report.id, vm.report).then(function(response) {
 
-                if (callback) {
-                    callback();
-                } else {
-                    MessageService.setMessage('Data has been saved successfully');
-                    $state.go('reports');
-                }
+                    if (callback) {
+                        callback();
+                    } else {
+                        MessageService.setMessage('Data has been saved successfully');
+                        $state.go('reports');
+                    }
 
-            }, function(error) {
-                vm.alerts.push({ type: 'danger', msg: 'Data has not been saved successfully' });
-            });
+                }, function(error) {
+                    vm.alerts.push({ type: 'danger', msg: 'Data has not been saved successfully' });
+                });
+            };
+
+            if (ReportService.helpers.isReportChanged(report.data, vm.report)) {
+                $confirm({text: 'Report parameters has been changed. Previous results will be deleted. Do you want to proceed?'}).then(function() {
+                    ReportService.reset(vm.report.id).then(function(response) {
+                        save();
+                    }, function(error) {
+                        vm.alerts.push({ type: 'danger', msg: 'Previous results have not been deleted successfully' });
+                    });
+                });
+            } else {
+                save();
+            }
+
+
         };
 
         vm.preview = function() {
@@ -166,7 +182,15 @@
 
         vm.view = function() {
             vm.save(function() {
-                $state.go('report-view', { reportId: vm.report.id });
+                if (ReportService.helpers.isReportChanged(report.data, vm.report)) {
+                    ReportService.generate(vm.report.id).then(function(response) {
+                        $state.go('report-view', { reportId: vm.report.id });
+                    }, function(error) {
+                        vm.alerts.push({ type: 'danger', msg: 'Report has not been generated successfully' });
+                    });
+                } else {
+                    $state.go('report-view', {reportId: vm.report.id});
+                }
             });
         };
 

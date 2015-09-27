@@ -103,6 +103,33 @@ class ReportController extends Controller
         return $results;
     }
 
+    public function reset($id)
+    {
+        if (Gate::denies('managerOnly')) {
+            abort(403);
+        }
+
+        $result = DB::transaction(function($id) use($id) {
+            $report = Report::find($id);
+
+            if ($report) {
+
+                if ($report->evaluated_at) {
+                    Result::whereHas('report', function($report) use($id) {
+                        $report->where('id', $id);
+                    })->delete();
+                    $report->evaluated_at = null;
+                }
+
+                $report->save();
+            }
+
+            return $report;
+        });
+
+        return $result;
+    }
+
     public function evaluate($id)
     {
         if (Gate::denies('managerOnly')) {
@@ -142,9 +169,10 @@ class ReportController extends Controller
                         $result->points = $points;
                         $result->save();
                     }
-                    $report->evaluated_at = Carbon::now();
-                    $report->save();
                 }
+
+                $report->evaluated_at = Carbon::now();
+                $report->save();
             }
 
             return $report;
