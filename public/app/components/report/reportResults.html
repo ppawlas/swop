@@ -7,46 +7,76 @@
     <div class="table-responsive">
 
         <div class="well">
-            <h5><strong>Name:</strong> {{reportResults.report.name}}</h5>
-            <h5><strong>Reporting period:</strong> {{reportResults.report.start_date | date:'yyyy-MM-dd'}} - {{reportResults.report.end_date | date:'yyyy-MM-dd'}}</h5>
-            <h5><strong>Evaluated at:</strong> {{reportResults.report.evaluated_at | date:'yyyy-MM-dd hh:mm:ss'}}</h5>
+            <h5><strong>{{ 'NAME' | translate }}:</strong> {{reportResults.report.name}}</h5>
+            <h5><strong>{{ 'REPORTING_PERIOD' | translate }}:</strong> {{reportResults.report.start_date | date:'yyyy-MM-dd'}} - {{reportResults.report.end_date | date:'yyyy-MM-dd'}}</h5>
+            <h5><strong>{{ 'EVALUATED_AT' | translate }}:</strong> {{reportResults.report.evaluated_at | date:'yyyy-MM-dd hh:mm:ss'}}</h5>
         </div>
 
         <table class="table table-bordered table-hover" ng-if="reportResults.report">
             <thead>
-            <tr>
-                <th rowspan="2">#</th>
-                <th rowspan="2">Name</th>
-                <th colspan="{{indicatorColumn.colspan}}" ng-repeat="indicatorColumn in reportResults.indicatorsColumns">
-                    {{indicatorColumn.name}}
-                </th>
-            </tr>
-            <tr>
-                <th ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
-                    {{indicatorsPivotColumn.type}}
-                </th>
-            </tr>
+                <tr>
+                    <th rowspan="2">#</th>
+                    <th rowspan="2">{{ 'NAME' | translate }}</th>
+                    <th colspan="{{indicatorColumn.colspan}}" ng-repeat="indicatorColumn in reportResults.indicatorsColumns">
+                        {{indicatorColumn.name}}
+                    </th>
+                    <th rowspan="2">{{ 'SUM' | translate }} <i class="fa fa-sort-amount-desc"></i></th>
+                </tr>
+                <tr>
+                    <th ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
+                        {{indicatorsPivotColumn.type | uppercase | translate}}
+                    </th>
+                </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="user in reportResults.report.users">
-                <td><strong>{{$index}}</strong></td>
-                <td>{{user.name}} {{user.surname}}</td>
-                <td ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
-                    {{reportResults.userResults[user.id][indicatorsPivotColumn.id][indicatorsPivotColumn.type]}}
-                </td>
-            </tr>
+                <tr ng-repeat="user in reportResults.report.users | orderBy:reportResults.sumComparator:true">
+                    <td><strong>{{$index}}</strong></td>
+                    <td>{{user.name}} {{user.surname}}</td>
+                    <td
+                            ng-class="reportResults.getColorClass(user.id, indicatorsPivotColumn.id, indicatorsPivotColumn.type)"
+                            ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
+                        {{reportResults.userResults[user.id][indicatorsPivotColumn.id][indicatorsPivotColumn.type]}}
+                    </td>
+                    <td>{{reportResults.usersStatistics[user.id].sum | number: 4}}</td>
+                </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td>{{ 'AVG' | translate }}</td>
+                    <td ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
+                        {{reportResults.indicatorsStatistics[indicatorsPivotColumn.id][indicatorsPivotColumn.type].avg | number: 4}}
+                    </td>
+                    <td>{{reportResults.globalStatistics.avg | number: 4}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{{ 'MIN' | translate }}</td>
+                    <td ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
+                        {{reportResults.indicatorsStatistics[indicatorsPivotColumn.id][indicatorsPivotColumn.type].min | number: 4}}
+                    </td>
+                    <td>{{reportResults.globalStatistics.min | number: 4}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>{{ 'MAX' | translate }}</td>
+                    <td ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
+                        {{reportResults.indicatorsStatistics[indicatorsPivotColumn.id][indicatorsPivotColumn.type].max | number: 4}}
+                    </td>
+                    <td>{{reportResults.globalStatistics.max | number: 4}}</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 
     <div class="well">
-        <h4>Legend</h4>
+        <h4>{{ 'LEGEND' | translate }}</h4>
         <h5 ng-repeat="indicatorColumn in reportResults.indicatorsColumns"><strong>{{indicatorColumn.name}}:</strong> {{indicatorColumn.description}}</h5>
     </div>
 
     <div class="panel-footer">
-        <p><a role="button" ui-sref="report-edit({reportId: reportResults.report.id})"><i class="fa fa-arrow-circle-left"></i> Report details</a></p>
-        <p><a role="button" ui-sref="reports"><i class="fa fa-arrow-circle-left"></i> Reports</a></p>
+        <p><a role="button" ui-sref="report-edit({reportId: reportResults.report.id})"><i class="fa fa-arrow-circle-left"></i> {{ 'REPORT_DETAILS' | translate }}</a></p>
+        <p><a role="button" ui-sref="reports"><i class="fa fa-arrow-circle-left"></i> {{ 'REPORTS' | translate }}</a></p>
     </div>
 
 </div>

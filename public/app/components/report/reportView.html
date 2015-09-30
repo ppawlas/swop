@@ -1,8 +1,8 @@
 <div class="panel panel-primary">
     <!-- Default panel contents -->
     <div class="panel-heading">
-        <strong>Reports</strong>&nbsp;
-        <button class="btn btn-xs btn-default pull-right " ng-click="reportList.new()"><i class="fa fa-plus-square"></i> New</button>
+        <strong>{{ 'REPORTS' | translate }}</strong>&nbsp;
+        <button class="btn btn-xs btn-default pull-right " ng-click="reportList.new()"><i class="fa fa-plus-square"></i> {{ 'CREATE' | translate }}</button>
     </div>
 
     <div class="alert alert-success" role="alert" ng-show="reportList.message">{{reportList.message}}</div>
@@ -11,10 +11,10 @@
     <table class="table table-striped" ng-if="reportList.reports">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Created at</th>
-            <th>Evaluated at</th>
+            <th>{{ 'ID' | translate }}</th>
+            <th>{{ 'NAME' | translate }}</th>
+            <th>{{ 'CREATED_AT' | translate }}</th>
+            <th>{{ 'EVALUATED_AT' | translate }}</th>
             <th></th>
             <th></th>
         </tr>
@@ -25,12 +25,12 @@
             <td><a role="button" ui-sref="report-edit({reportId: report.id})">{{report.name}}</a></td>
             <td>{{report.created_at}}</td>
             <td>{{report.evaluated_at}}</td>
-            <td><button class="btn btn-xs btn-default" role="button" ng-disabled="!report.evaluated_at" ui-sref="report-view({reportId: report.id})"><i class="fa fa-table"></i> Results</button></td>
+            <td><button class="btn btn-xs btn-default" role="button" ng-disabled="!report.evaluated_at" ui-sref="report-view({reportId: report.id})"><i class="fa fa-table"></i> {{ 'RESULTS' | translate }}</button></td>
             <td>
-                <button class="btn btn-xs btn-warning" ng-show="report.evaluated_at" ng-click="reportList.generate(report.id)" confirm="Are you sure you want to recalculate this report? Previous results will be lost."><i class="fa fa-cog"></i> Generate</button>
-                <button class="btn btn-xs btn-success" ng-hide="report.evaluated_at" ng-click="reportList.generate(report.id)"><i class="fa fa-cog"></i> Generate</button>
+                <button class="btn btn-xs btn-warning" ng-show="report.evaluated_at" ng-click="reportList.generate(report.id)" confirm="{{ 'CONFIRM_REGENERATE' | translate }}"><i class="fa fa-cog"></i> {{ 'GENERATE' | translate }}</button>
+                <button class="btn btn-xs btn-success" ng-hide="report.evaluated_at" ng-click="reportList.generate(report.id)"><i class="fa fa-cog"></i> {{ 'GENERATE' | translate }}</button>
             </td>
-            <td><button class="btn btn-xs btn-danger" ng-click="reportList.delete(report.id)" confirm="Are you sure you want to delete this report?"><i class="fa fa-remove"></i> Delete</button></td>
+            <td><button class="btn btn-xs btn-danger" ng-click="reportList.delete(report.id)" confirm="{{ 'CONFIRM_REPORT_DELETE' | translate }}"><i class="fa fa-remove"></i> {{ 'DELETE' | translate }}</button></td>
         </tr>
         </tbody>
     </table>

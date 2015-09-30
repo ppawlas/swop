@@ -1,8 +1,8 @@
 <div class="panel panel-primary">
     <!-- Default panel contents -->
     <div class="panel-heading">
-        <strong>Organizations</strong>&nbsp;
-        <button class="btn btn-xs btn-default pull-right " ng-click="organizationList.new()"><i class="fa fa-plus-square"></i> New</button>
+        <strong>{{ 'ORGANIZATIONS' | translate }}</strong>&nbsp;
+        <button class="btn btn-xs btn-default pull-right " ng-click="organizationList.new()"><i class="fa fa-plus-square"></i> {{ 'CREATE' | translate }}</button>
     </div>
 
     <div class="alert alert-success" role="alert" ng-show="organizationList.message">{{organizationList.message}}</div>
@@ -11,10 +11,10 @@
     <table class="table table-striped" ng-if="organizationList.organizations">
         <thead>
         <tr>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Active</th>
-            <th>System</th>
+            <th>{{ 'CODE' | translate }}</th>
+            <th>{{ 'NAME' | translate }}</th>
+            <th>{{ 'ACTIVE' | translate }}</th>
+            <th>{{ 'SYSTEM' | translate }}</th>
             <th></th>
         </tr>
         </thead>
@@ -24,7 +24,7 @@
             <td><a role="button" ui-sref="organization-edit({organizationId: organization.id})">{{organization.name}}</a></td>
             <td><input type="checkbox" ng-model="organization.active" disabled></td>
             <td><input type="checkbox" ng-model="organization.system" disabled></td>
-            <td><button class="btn btn-xs btn-danger " ng-click="organizationList.delete(organization.id)" confirm="Are you sure you want to delete this organization?"><i class="fa fa-remove"></i> Delete</button></td>
+            <td><button class="btn btn-xs btn-danger " ng-click="organizationList.delete(organization.id)" confirm="{{ 'CONFIRM_ORGANIZATION_DELETE' | translate }}"><i class="fa fa-remove"></i> {{ 'DELETE' | translate }}</button></td>
         </tr>
         </tbody>
     </table>

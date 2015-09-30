@@ -10,6 +10,8 @@
         var AuthService = {};
 
         AuthService.logout = function() {
+            var organizationId = $rootScope.currentUser.organization.id;
+
             $auth.logout().then(function() {
                 // Remove the authenticated user from local storage
                 localStorage.removeItem('user');
@@ -22,7 +24,7 @@
                 $rootScope.currentUser = null;
 
                 // Redirect to the login page
-                $state.go('auth');
+                $state.go('auth', {organizationId: organizationId});
             });
         };
 

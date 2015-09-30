@@ -1,32 +1,32 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a role="button" class="navbar-brand" ui-sref="dash"><strong>SWOP</strong> {{currentUser.organization.name}}</a>
+            <a role="button" class="navbar-brand" ui-sref="dash"><strong>Ocena.IQ</strong> {{currentUser.organization.name}}</a>
         </div>
 
         <ul class="nav navbar-nav">
-            <li><a role="button" ui-sref="dash"><i class="fa fa-home"></i> Dashboard</a></li>
+            <li><a role="button" ui-sref="dash"><i class="fa fa-home"></i> {{ 'DASH' | translate }}</a></li>
             <li dropdown ng-show="currentUser.isManager">
-                <a dropdown-toggle role="button"><i class="fa fa-cogs"></i> Manager <span class="caret"></span></a>
+                <a dropdown-toggle role="button"><i class="fa fa-cogs"></i> {{ 'MANAGER' | translate }} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a role="button" ui-sref="reports">Reports</a></li>
-                    <li><a role="button" ui-sref="groups">Groups</a></li>
-                    <li><a role="button" ui-sref="organization-indicators">Indicators</a></li>
+                    <li><a role="button" ui-sref="reports">{{ 'REPORTS' | translate }}</a></li>
+                    <li><a role="button" ui-sref="groups">{{ 'GROUPS' | translate }}</a></li>
+                    <li><a role="button" ui-sref="organization-indicators">{{ 'INDICATORS' | translate }}</a></li>
                 </ul>
             </li>
             <li dropdown ng-show="currentUser.isAdmin">
-                <a dropdown-toggle role="button"><i class="fa fa-cogs"></i> Admin <span class="caret"></span></a>
+                <a dropdown-toggle role="button"><i class="fa fa-cogs"></i> {{ 'ADMIN' | translate }} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a role="button" ui-sref="organizations">Organizations</a></li>
-                    <li><a role="button" ui-sref="users">Users</a></li>
-                    <li><a role="button" ui-sref="admin-indicators">Indicators</a></li>
+                    <li><a role="button" ui-sref="organizations">{{ 'ORGANIZATIONS' | translate }}</a></li>
+                    <li><a role="button" ui-sref="users">{{ 'USERS' | translate }}</a></li>
+                    <li><a role="button" ui-sref="admin-indicators">{{ 'INDICATORS' | translate }}</a></li>
                 </ul>
             </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-            <li><a role="button">Signed in as {{currentUser.name}} {{currentUser.surname}} ({{currentUser.role.display_name}})</a></li>
-            <li><a role="button" ng-click="nav.logout()" confirm="Are you sure you want to logout?"><i class="fa fa-sign-out"></i> Logout</a></li>
+            <li><a role="button">{{ 'SIGNED' | translate }} {{currentUser.name}} {{currentUser.surname}} ({{currentUser.role.display_name | uppercase | translate}})</a></li>
+            <li><a role="button" ng-click="nav.logout()" confirm="{{ 'CONFIRM_LOGOUT' | translate }}"><i class="fa fa-sign-out"></i> {{ 'LOGOUT' | translate }}</a></li>
         </ul>
     </div>
 </nav>

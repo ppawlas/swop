@@ -3,8 +3,14 @@
 	'use strict';
 
 	angular
-        .module('authApp', ['ui.router', 'satellizer', 'ui.bootstrap', 'angular-confirm', 'ui.select', 'ngSanitize', 'angularUtils.directives.dirPagination', 'ngAnimate', 'blockUI'])
-        .config(function($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, $provide) {
+        .module('authApp', ['ui.router', 'satellizer', 'ui.bootstrap', 'angular-confirm', 'ui.select', 'ngSanitize', 'angularUtils.directives.dirPagination', 'ngAnimate', 'blockUI', 'pascalprecht.translate'])
+        .config(function($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, $provide, $translateProvider) {
+
+            $translateProvider.useStaticFilesLoader({
+                prefix: 'assets/resources/locale-',// path to translations files
+                suffix: '.json'// suffix, currently- extension of the translations
+            });
+            $translateProvider.preferredLanguage('pl_PL');
 
             function redirectWhenLoggedOut($q, $injector) {
 
@@ -59,20 +65,6 @@
             $urlRouterProvider.otherwise('/auth');
 
             $stateProvider
-                .state('auth', {
-                    url: '/auth',
-                    views: {
-                        content: {
-                            templateUrl: 'app/components/auth/authView.html',
-                            controller: 'AuthController as auth',
-                            resolve: {
-                                organizations: function(OrganizationService) {
-                                    return OrganizationService.getAvailable();
-                                }
-                            }
-                        }
-                    }
-                })
                 .state('dash', {
                     url: '/dash',
                     views: {
@@ -344,7 +336,22 @@
                             templateUrl: 'app/components/nav/navView.html',
                             controller: 'NavController as nav'                        }
                     }
-                });
+                })
+                .state('auth', {
+                    url: '/:organizationId',
+                    views: {
+                        content: {
+                            templateUrl: 'app/components/auth/authView.html',
+                            controller: 'AuthController as auth',
+                            resolve: {
+                                organizations: function(OrganizationService) {
+                                    return OrganizationService.getAvailable();
+                                }
+                            }
+                        }
+                    }
+                })
+                ;
         })
         .run(function($rootScope, $state) {
             // $stateChangeStart is fired whenever the state changes. We can use some parameters

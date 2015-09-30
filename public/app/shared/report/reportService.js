@@ -54,26 +54,26 @@
         /**
          * Filter the given array of User objects only to those that are not yet
          * assigned to the given Report object.
-         * @param group Report object
+         * @param report Report object
          * @param users array of User objects
          * @returns filtered array of User objects
          */
         ReportService.helpers.filterUsers = function(report, users) {
             var reportUsersIds = report.users.map(function(user) { return user.id; });
             return users.filter(function(user) { return reportUsersIds.indexOf(user.id) === -1; });
-        }
+        };
 
         /**
          * Filter the given array of Indicator objects only to those that are not yet
          * assigned to the given Report object.
-         * @param group Report object
+         * @param report Report object
          * @param indicators array of Indicator objects
          * @returns filtered array of Indicator objects
          */
         ReportService.helpers.filterIndicators = function(report, indicators) {
             var reportIndicatorsIds = report.indicators.map(function(indicator) { return indicator.id; });
             return indicators.filter(function(indicator) { return reportIndicatorsIds.indexOf(indicator.id) === -1; });
-        }
+        };
 
         /**
          * Prepare the given Report object converting its date strings
@@ -192,6 +192,84 @@
             });
 
             return userResults;
+        };
+
+        /**
+         * For each user calculate summary basing on currently selected
+         * indicators, taking into account only those for which points
+         * are displayed.
+         * @param results Results objects array
+         * @param report Report object
+         * @returns {{}} Object of user summaries accessed using user's id
+         */
+        ReportService.helpers.getUsersStatistics = function(results, report) {
+            var indicators = report.indicators.reduce(function(obj, indicator) {
+                obj[indicator.id] = indicator;
+                return obj;
+            }, {});
+
+            var usersStatistics = {};
+
+            results.forEach(function(result) {
+                if (usersStatistics[result.user_id] === undefined) {
+                    usersStatistics[result.user_id] = {sum: 0};
+                }
+                usersStatistics[result.user_id].sum += indicators[result.indicator_id].pivot.show_points ? Number(result.points) : 0;
+            });
+
+            return usersStatistics;
+        };
+
+        /**
+         * For each indicator calculate its minimum, maximum
+         * and average value and points across all selected users.
+         * @param results Results objects array
+         * @returns {{}} Object of indicator summaries accessed using indicator's id
+         */
+        ReportService.helpers.getIndicatorsStatistics = function(results) {
+            var indicatorsStatistics = {};
+
+            results.forEach(function(result) {
+                if (indicatorsStatistics[result.indicator_id] === undefined) {
+                    indicatorsStatistics[result.indicator_id] = {
+                        value: {
+                            data: []
+                        },
+                        points: {
+                            data: []
+                        }
+                    };
+                }
+                indicatorsStatistics[result.indicator_id].value.data.push(Number(result.value));
+                indicatorsStatistics[result.indicator_id].points.data.push(Number(result.points));
+            });
+
+            angular.forEach(indicatorsStatistics, function(indicator) {
+                indicator.value.min = Math.min.apply(null, indicator.value.data);
+                indicator.value.max = Math.max.apply(null, indicator.value.data);
+                indicator.value.avg = indicator.value.data.reduce(function(a, b) { return a + b; }) / indicator.value.data.length;
+                indicator.points.min = Math.min.apply(null, indicator.points.data);
+                indicator.points.max = Math.max.apply(null, indicator.points.data);
+                indicator.points.avg = indicator.value.data.reduce(function(a, b) { return a + b; }) / indicator.points.data.length;
+            });
+
+            return indicatorsStatistics;
+        };
+
+        /**
+         * Calculate minimum, maximum and average sum of points across all user
+         * and currently displayed indicators.
+         * @param usersStatistics Object of user summaries accessed using user's id
+         * @returns {{min: number, max: number, avg: number}} global statistics object
+         */
+        ReportService.helpers.getGlobalStatistics = function(usersStatistics) {
+            var sums = Object.keys(usersStatistics).map(function(id) { return usersStatistics[id].sum; });
+
+            return {
+                min: Math.min.apply(null, sums),
+                max: Math.max.apply(null, sums),
+                avg: sums.reduce(function(a, b) { return a + b; }) / sums.length
+            };
         };
 
         /**

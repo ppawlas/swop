@@ -9,19 +9,19 @@
         <form class="form-horizontal">
 
             <div class="form-group">
-                <label for="name" class="col-sm-1 control-label">Name</label>
+                <label for="name" class="col-sm-1 control-label">{{ 'NAME' | translate }}</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" placeholder="Name" ng-model="groupForm.group.name">
+                    <input type="text" class="form-control" id="name" placeholder="{{ 'NAME' | translate }}" ng-model="groupForm.group.name">
                 </div>
             </div>
 
             <div class="row">
 
                 <div class="col-sm-offset-1 col-sm-5">
-                    <h4>Users</h4>
+                    <h4>{{ 'USERS' | translate }}</h4>
                     <accordion close-others="false">
 
-                        <accordion-group heading="Selected" is-open="true">
+                        <accordion-group heading="{{ 'SELECTED' | translate }}" is-open="true">
                             <table class="table">
                                 <tbody>
                                 <tr ng-repeat="user in groupForm.group.users">
@@ -33,7 +33,7 @@
                             </table>
                         </accordion-group>
 
-                        <accordion-group heading="Available">
+                        <accordion-group heading="{{ 'AVAILABLE' | translate }}">
                             <table class="table">
                                 <tbody>
                                 <tr ng-repeat="user in groupForm.users">
@@ -49,10 +49,10 @@
                 </div>
 
                 <div class="col-sm-5">
-                    <h4>Indicators</h4>
+                    <h4>{{ 'INDICATORS' | translate }}</h4>
                     <accordion close-others="false">
 
-                        <accordion-group heading="Selected" is-open="true">
+                        <accordion-group heading="{{ 'SELECTED' | translate }}" is-open="true">
                             <table class="table">
                                 <tbody>
                                 <tr ng-repeat="indicator in groupForm.group.indicators">
@@ -64,7 +64,7 @@
                             </table>
                         </accordion-group>
 
-                        <accordion-group heading="Available">
+                        <accordion-group heading="{{ 'AVAILABLE' | translate }}">
                             <table class="table">
                                 <tbody>
                                 <tr ng-repeat="indicator in groupForm.indicators">
@@ -83,7 +83,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-1 col-sm-10">
-                    <button class="btn btn-primary" ng-click="groupForm.submit()">Submit</button>
+                    <button class="btn btn-primary" ng-click="groupForm.submit()">{{ 'SAVE' | translate }}</button>
                 </div>
             </div>
 
@@ -95,7 +95,7 @@
 
 
     <div class="panel-footer">
-        <a role="button" ui-sref="groups"><i class="fa fa-arrow-circle-left"></i> Groups</a>
+        <a role="button" ui-sref="groups"><i class="fa fa-arrow-circle-left"></i> {{ 'GROUPS' | translate }}</a>
     </div>
 
 </div>

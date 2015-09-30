@@ -2,7 +2,7 @@
     <!-- Default panel contents -->
     <div class="panel-heading">
         <strong>{{reportForm.title}}</strong>
-        <button class="btn btn-xs btn-default pull-right " ng-click="reportForm.toggleGroupPanel()"><i class="fa fa-group"></i> Group</button>
+        <button class="btn btn-xs btn-default pull-right " ng-click="reportForm.toggleGroupPanel()"><i class="fa fa-group"></i> {{ 'GROUP' | translate }}</button>
     </div>
 
     <alert ng-repeat="alert in reportForm.alerts" type="{{alert.type}}" close="reportForm.closeAlert($index)">{{alert.msg}}</alert>
@@ -12,9 +12,9 @@
         <div collapse="!reportForm.groupPanel">
             <div class="well">
                 <div class="form-group">
-                    <h4>Group</h4>
+                    <h4>{{ 'GROUP' | translate }}</h4>
                     <ui-select ng-model="reportForm.group" theme="bootstrap">
-                        <ui-select-match placeholder="Select or search a group in the list...">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-match placeholder="{{ 'SELECT_GROUP_PLACEHOLDER' | translate }}">{{$select.selected.name}}</ui-select-match>
                         <ui-select-choices repeat="group in reportForm.groups | filter: $select.search">
                             <span ng-bind-html="group.name | highlight: $select.search"></span>
                         </ui-select-choices>
@@ -23,17 +23,17 @@
 
                 <div class="form-group">
                     <button class="btn btn-primary" ng-disabled="!reportForm.group" ng-click="reportForm.loadGroup()"
-                            confirm="Loading the group will override the current settings. Are you sure?"><i class="fa fa-download"></i> Load</button>
+                            confirm="{{ 'CONFIRM_GROUP_LOAD' | translate }}"><i class="fa fa-download"></i> {{ 'LOAD' | translate }}</button>
                     <button class="btn btn-primary" ng-disabled="!reportForm.group" ng-click="reportForm.saveGroup()"
-                            confirm="Group will be overridden with the current settings. Are you sure?"><i class="fa fa-upload"></i> Save</button>
+                            confirm="{{ 'CONFIRM_GROUP_SAVE' | translate }}"><i class="fa fa-upload"></i> {{ 'SAVE' | translate }}</button>
                 </div>
 
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="text" class="form-control" ng-model="reportForm.newGroupName" placeholder="Enter name..."/>
+                        <input type="text" class="form-control" ng-model="reportForm.newGroupName" placeholder="{{ 'ENTER_NAME' | translate }}"/>
                         <span class="input-group-btn">
                             <button class="btn btn-primary" ng-disabled="!reportForm.newGroupName" ng-click="reportForm.saveNewGroup()">
-                                <i class="fa fa-plus-square"></i> Save as new
+                                <i class="fa fa-plus-square"></i> {{ 'SAVE_AS_NEW' | translate }}
                             </button>
                         </span>
                     </div>
@@ -44,14 +44,14 @@
         <form class="form-horizontal">
 
             <div class="form-group">
-                <label for="name" class="col-sm-1 control-label">Name</label>
+                <label for="name" class="col-sm-1 control-label">{{ 'NAME' | translate }}</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" placeholder="Name" ng-model="reportForm.report.name" ng-required="true">
+                    <input type="text" class="form-control" id="name" placeholder="{{ 'NAME' | translate }}" ng-model="reportForm.report.name" ng-required="true">
                 </div>
             </div>
 
             <div class="form-group" ng-show="reportForm.report.evaluated_at">
-                <label for="evaluatedAt" class="col-sm-1 control-label">Evaluated at</label>
+                <label for="evaluatedAt" class="col-sm-1 control-label">{{ 'EVALUATED_AT' | translate }}</label>
                 <div class="col-sm-10">
                     <input type="datetime-local" ng-disabled="true" class="form-control" id="evaluatedAt" ng-model="reportForm.report.evaluated_at">
                 </div>
@@ -59,7 +59,7 @@
 
             <div class="row">
                 <div class="col-sm-offset-1 col-sm-5">
-                    <h4>Start date</h4>
+                    <h4>{{ 'START_DATE' | translate }}</h4>
                     <p class="input-group">
                         <input type="date" class="form-control" datepicker-popup ng-model="reportForm.report.start_date"
                                is-open="reportForm.datepicker.status.opened" ng-required="true"
@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="col-sm-5">
-                    <h4>End date</h4>
+                    <h4>{{ 'END_DATE' | translate }}</h4>
                     <p class="input-group">
                         <input type="date" class="form-control" datepicker-popup ng-model="reportForm.report.end_date"
                                is-open="reportForm.datepicker.status.opened" ng-required="true"
@@ -88,16 +88,16 @@
             <div class="row">
 
                 <div class="col-sm-offset-1 col-sm-5">
-                    <h4>Users</h4>
+                    <h4>{{ 'USERS' | translate }}</h4>
                     <accordion close-others="false">
 
-                        <accordion-group heading="Selected" is-open="true">
+                        <accordion-group heading="{{ 'SELECTED' | translate }}" is-open="true">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>View self</th>
-                                        <th>View all</th>
+                                        <th>{{ 'NAME' | translate }}</th>
+                                        <th>{{ 'VIEW_SELF' | translate }}</th>
+                                        <th>{{ 'VIEW_ALL' | translate }}</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -113,7 +113,7 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td><strong>Toggle all</strong></td>
+                                    <td><strong>{{ 'TOGGLE_ALL' | translate }}</strong></td>
                                     <td><input type="checkbox" ng-model="reportForm.toggles.users.self.state" ng-change="reportForm.toggles.users.self.toggle()"></td>
                                     <td><input type="checkbox" ng-model="reportForm.toggles.users.all.state" ng-change="reportForm.toggles.users.all.toggle()"></td>
                                     <td></td>
@@ -122,7 +122,7 @@
                             </table>
                         </accordion-group>
 
-                        <accordion-group heading="Available">
+                        <accordion-group heading="{{ 'AVAILABLE' | translate }}">
                             <table class="table">
                                 <tbody>
                                 <tr ng-repeat="user in reportForm.users">
@@ -138,16 +138,16 @@
                 </div>
 
                 <div class="col-sm-5">
-                    <h4>Indicators</h4>
+                    <h4>{{ 'INDICATORS' | translate }}</h4>
                     <accordion close-others="false">
 
-                        <accordion-group heading="Selected" is-open="true">
+                        <accordion-group heading="{{ 'SELECTED' | translate }}" is-open="true">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Value</th>
-                                        <th>Points</th>
+                                        <th>{{ 'NAME' | translate }}</th>
+                                        <th>{{ 'VALUE' | translate }}</th>
+                                        <th>{{ 'POINTS' | translate }}</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -163,7 +163,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td><strong>Toggle all</strong></td>
+                                        <td><strong>{{ 'TOGGLE_ALL' | translate }}</strong></td>
                                         <td><input type="checkbox" ng-model="reportForm.toggles.indicators.value.state" ng-change="reportForm.toggles.indicators.value.toggle()"></td>
                                         <td><input type="checkbox" ng-model="reportForm.toggles.indicators.points.state" ng-change="reportForm.toggles.indicators.points.toggle()"></td>
                                         <td></td>
@@ -172,7 +172,7 @@
                             </table>
                         </accordion-group>
 
-                        <accordion-group heading="Available">
+                        <accordion-group heading="{{ 'AVAILABLE' | translate }}">
                             <table class="table">
                                 <tbody>
                                 <tr ng-repeat="indicator in reportForm.indicators">
@@ -191,11 +191,11 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-1 col-sm-10">
-                    <button class="btn btn-primary" ng-click="reportForm.save()"><i class="fa fa-upload"></i> Save</button>
-                    <button class="btn btn-primary" ng-click="reportForm.preview()"><i class="fa fa-search"></i> Preview template</button>
-                    <button ng-class="['btn', {'btn-warning': !reportForm.report.evaluated_at, 'btn-success': reportForm.report.evaluated_at}]" ng-disabled="!reportForm.report.evaluated_at" ng-click="reportForm.view()"><i class="fa fa-table"></i> View results</button>
-                    <button class="btn btn-warning" ng-show="reportForm.report.evaluated_at" ng-click="reportForm.generate()" confirm="Are you sure you want to recalculate this report? Previous results will be lost."><i class="fa fa-cog"></i> Generate</button>
-                    <button class="btn btn-success" ng-hide="reportForm.report.evaluated_at" ng-click="reportForm.generate()"><i class="fa fa-cog"></i> Generate</button>
+                    <button class="btn btn-primary" ng-click="reportForm.save()"><i class="fa fa-upload"></i> {{ 'SAVE' | translate }}</button>
+                    <button class="btn btn-primary" ng-click="reportForm.preview()"><i class="fa fa-search"></i> {{ 'PREVIEW_TEMPLATE' | translate }}</button>
+                    <button ng-class="['btn', {'btn-warning': !reportForm.report.evaluated_at, 'btn-success': reportForm.report.evaluated_at}]" ng-disabled="!reportForm.report.evaluated_at" ng-click="reportForm.view()"><i class="fa fa-table"></i> {{ 'VIEW_RESULTS' | translate }}</button>
+                    <button class="btn btn-warning" ng-show="reportForm.report.evaluated_at" ng-click="reportForm.generate()" confirm="{{ 'CONFIRM_REGENERATE' | translate }}"><i class="fa fa-cog"></i> {{ 'GENERATE' | translate }}</button>
+                    <button class="btn btn-success" ng-hide="reportForm.report.evaluated_at" ng-click="reportForm.generate()"><i class="fa fa-cog"></i> {{ 'GENERATE' | translate }}</button>
                 </div>
             </div>
 
@@ -207,7 +207,7 @@
 
 
     <div class="panel-footer">
-        <a role="button" ui-sref="reports"><i class="fa fa-arrow-circle-left"></i> Reports</a>
+        <a role="button" ui-sref="reports"><i class="fa fa-arrow-circle-left"></i> {{ 'REPORTS' | translate }}</a>
     </div>
 
 </div>

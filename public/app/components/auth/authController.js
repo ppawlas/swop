@@ -6,13 +6,16 @@
         .module('authApp')
         .controller('AuthController', AuthController);
 
-    function AuthController($auth, $state, $http, $rootScope, organizations) {
+    function AuthController($auth, $state, $http, $rootScope, $stateParams, organizations) {
 
         var vm = this;
 
         // List of all loaded organizations
         vm.organizations = organizations.data;
-        vm.organization;
+        // Set initially selected organization according to the optional route parameter
+        vm.organization = $stateParams.organizationId ? organizations.data.filter(function (organization) {
+            return organization.id == $stateParams.organizationId;
+        })[0] : null;
 
         vm.loginError = false;
         vm.loginErrorText;

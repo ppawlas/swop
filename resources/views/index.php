@@ -31,6 +31,8 @@
 	<script src="node_modules/angular-utils-pagination/dirPagination.js"></script>
 	<script src="node_modules/angular-animate/angular-animate.js"></script>
 	<script src="node_modules/angular-block-ui/dist/angular-block-ui.js"></script>
+	<script src="node_modules/angular-translate/dist/angular-translate.js"></script>
+	<script src="node_modules/angular-translate/dist/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
 <!--	<script src="node_modules/angular-i18n/angular-locale_pl-pl.js"></script>-->
 
 	<!-- Application Scripts -->

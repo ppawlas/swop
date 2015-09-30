@@ -1,8 +1,8 @@
 <div class="panel panel-primary">
     <!-- Default panel contents -->
     <div class="panel-heading">
-        <strong>Groups</strong>&nbsp;
-        <button class="btn btn-xs btn-default pull-right " ng-click="groupList.new()"><i class="fa fa-plus-square"></i> New</button>
+        <strong>{{ 'GROUPS' | translate }}</strong>&nbsp;
+        <button class="btn btn-xs btn-default pull-right " ng-click="groupList.new()"><i class="fa fa-plus-square"></i> {{ 'CREATE' | translate }}</button>
     </div>
 
     <div class="alert alert-success" role="alert" ng-show="groupList.message">{{groupList.message}}</div>
@@ -11,14 +11,14 @@
     <table class="table table-striped" ng-if="groupList.groups">
         <thead>
         <tr>
-            <th>Name</th>
+            <th>{{ 'NAME' | translate }}</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         <tr dir-paginate="group in groupList.groups | itemsPerPage: 10">
             <td><a role="button" ui-sref="group-edit({groupId: group.id})">{{group.name}}</a></td>
-            <td><button class="btn btn-xs btn-danger " ng-click="groupList.delete(group.id)" confirm="Are you sure you want to delete this group?"><i class="fa fa-remove"></i> Delete</button></td>
+            <td><button class="btn btn-xs btn-danger " ng-click="groupList.delete(group.id)" confirm="{{ 'CONFIRM_GROUP_DELETE' | translate }}"><i class="fa fa-remove"></i> {{ 'DELETE' | translate }}</button></td>
         </tr>
         </tbody>
     </table>
