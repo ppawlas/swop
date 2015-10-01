@@ -32,7 +32,7 @@ class FakeResultsSeeder extends Seeder
 
             foreach($report->users as $user) {
                 foreach($report->indicators as $indicator) {
-                    $value = ($indicator->ratio == 'value') ? $faker->randomNumber(3) : $faker->randomFloat(3, 0, 1);
+                    $value = ($indicator->type == 'value') ? $faker->randomNumber(3) : $faker->randomFloat(3, 0, 1);
                     $points = $value * $coefficients[$indicator->id];
 
                     Result::create([

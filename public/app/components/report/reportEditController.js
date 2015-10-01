@@ -160,7 +160,7 @@
             };
 
             if (ReportService.helpers.isReportChanged(report.data, vm.report)) {
-                $confirm({text: 'CONFIRM_REPORT_SAVE'}).then(function() {
+                $confirm({text: 'Parametry raportu uległy zmianie. Poprzednie wyniki zostaną utracone. Czy chcesz kontynuować?'}).then(function() {
                     ReportService.reset(vm.report.id).then(function(response) {
                         save();
                     }, function(error) {

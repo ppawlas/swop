@@ -37,7 +37,7 @@
                             ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
                         {{reportResults.userResults[user.id][indicatorsPivotColumn.id][indicatorsPivotColumn.type]}}
                     </td>
-                    <td>{{reportResults.usersStatistics[user.id].sum | number: 4}}</td>
+                    <td>{{reportResults.usersStatistics[user.id].sum | number: 2}}</td>
                 </tr>
             </tbody>
             <tfoot>
@@ -45,7 +45,7 @@
                     <td></td>
                     <td>{{ 'AVG' | translate }}</td>
                     <td ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
-                        {{reportResults.indicatorsStatistics[indicatorsPivotColumn.id][indicatorsPivotColumn.type].avg | number: 4}}
+                        {{reportResults.indicatorsStatistics[indicatorsPivotColumn.id][indicatorsPivotColumn.type].avg | number: 2}}
                     </td>
                     <td>{{reportResults.globalStatistics.avg | number: 4}}</td>
                 </tr>
@@ -53,7 +53,7 @@
                     <td></td>
                     <td>{{ 'MIN' | translate }}</td>
                     <td ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
-                        {{reportResults.indicatorsStatistics[indicatorsPivotColumn.id][indicatorsPivotColumn.type].min | number: 4}}
+                        {{reportResults.indicatorsStatistics[indicatorsPivotColumn.id][indicatorsPivotColumn.type].min | number: 2}}
                     </td>
                     <td>{{reportResults.globalStatistics.min | number: 4}}</td>
                 </tr>
@@ -61,7 +61,7 @@
                     <td></td>
                     <td>{{ 'MAX' | translate }}</td>
                     <td ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
-                        {{reportResults.indicatorsStatistics[indicatorsPivotColumn.id][indicatorsPivotColumn.type].max | number: 4}}
+                        {{reportResults.indicatorsStatistics[indicatorsPivotColumn.id][indicatorsPivotColumn.type].max | number: 2}}
                     </td>
                     <td>{{reportResults.globalStatistics.max | number: 4}}</td>
                 </tr>

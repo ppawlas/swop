@@ -13,8 +13,8 @@
         // List of all loaded organizations
         vm.organizations = organizations.data;
         // Set initially selected organization according to the optional route parameter
-        vm.organization = $stateParams.organizationId ? organizations.data.filter(function (organization) {
-            return organization.id == $stateParams.organizationId;
+        vm.organization = $stateParams.organizationCode ? organizations.data.filter(function (organization) {
+            return organization.code == $stateParams.organizationCode;
         })[0] : null;
 
         vm.loginError = false;

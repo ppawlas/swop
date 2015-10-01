@@ -6,6 +6,8 @@
         .module('authApp', ['ui.router', 'satellizer', 'ui.bootstrap', 'angular-confirm', 'ui.select', 'ngSanitize', 'angularUtils.directives.dirPagination', 'ngAnimate', 'blockUI', 'pascalprecht.translate'])
         .config(function($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, $provide, $translateProvider, blockUIConfig) {
 
+
+
             blockUIConfig.message = 'Trwa ładowanie';
 
             $translateProvider.useStaticFilesLoader({
@@ -340,7 +342,7 @@
                     }
                 })
                 .state('auth', {
-                    url: '/:organizationId',
+                    url: '/:organizationCode',
                     views: {
                         content: {
                             templateUrl: 'app/components/auth/authView.html',
@@ -355,7 +357,11 @@
                 })
                 ;
         })
-        .run(function($rootScope, $state) {
+        .run(function($rootScope, $state, $confirmModalDefaults) {
+            $confirmModalDefaults.defaultLabels.title = 'Potwierdzenie';
+            $confirmModalDefaults.defaultLabels.ok = 'Tak';
+            $confirmModalDefaults.defaultLabels.cancel = 'Nie';
+
             // $stateChangeStart is fired whenever the state changes. We can use some parameters
             // such as toState to hook into details about the state as it is changing
             $rootScope.$on('$stateChangeStart', function(event, toState) {
