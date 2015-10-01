@@ -5,8 +5,8 @@
         <button class="btn btn-xs btn-default pull-right " ng-click="groupList.new()"><i class="fa fa-plus-square"></i> {{ 'CREATE' | translate }}</button>
     </div>
 
-    <div class="alert alert-success" role="alert" ng-show="groupList.message">{{groupList.message}}</div>
-    <div class="alert alert-danger" role="alert" ng-show="groupList.error">{{groupList.error}}</div>
+    <div class="alert alert-success" role="alert" ng-show="groupList.message">{{groupList.message | translate}}</div>
+    <div class="alert alert-danger" role="alert" ng-show="groupList.error">{{groupList.error | translate}}</div>
 
     <table class="table table-striped" ng-if="groupList.groups">
         <thead>

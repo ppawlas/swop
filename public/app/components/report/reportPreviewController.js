@@ -10,7 +10,7 @@
 
         var vm = this;
 
-        vm.title = 'Report preview';
+        vm.title = 'REPORT_PREVIEW';
 
         vm.error = '';
 

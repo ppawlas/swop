@@ -10,7 +10,7 @@
 
         var vm = this;
 
-        vm.title = 'New report';
+        vm.title = 'NEW_REPORT';
         vm.report = {
             users: [],
             indicators: []
@@ -111,9 +111,9 @@
                 vm.users = ReportService.helpers.filterUsers(vm.report, users.data);
                 vm.indicators = ReportService.helpers.filterIndicators(vm.report, indicators.data);
 
-                vm.alerts.push({ type: 'success', msg: 'Group has been loaded successfully' });
+                vm.alerts.push({ type: 'success', msg: 'GROUP_LOAD_SUCCESS' });
             }, function(error) {
-                vm.alerts.push({ type: 'danger', msg: 'Group has not been loaded successfully' });
+                vm.alerts.push({ type: 'danger', msg: 'GROUP_LOAD_ERROR' });
             })
         };
 
@@ -124,9 +124,9 @@
             group.indicators = vm.report.indicators;
 
             GroupService.update(group.id, group).then(function(response) {
-                vm.alerts.push({ type: 'success', msg: 'Group has been saved successfully' });
+                vm.alerts.push({ type: 'success', msg: 'GROUP_SAVE_SUCCESS' });
             }, function(error) {
-                vm.alerts.push({ type: 'danger', msg: 'Group has not been saved successfully' });
+                vm.alerts.push({ type: 'danger', msg: 'GROUP_SAVE_ERROR' });
             });
         };
 
@@ -137,12 +137,12 @@
             group.indicators = vm.report.indicators;
 
             GroupService.create(group).then(function(response) {
-                vm.alerts.push({ type: 'success', msg: 'Group has been saved successfully' });
+                vm.alerts.push({ type: 'success', msg: 'GROUP_SAVE_SUCCESS' });
                 GroupService.getAll().then(function(response) {
                     vm.groups = response.data;
                 });
             }, function(error) {
-                vm.alerts.push({ type: 'danger', msg: 'Group has not been saved successfully' });
+                vm.alerts.push({ type: 'danger', msg: 'GROUP_SAVE_ERROR' });
             });
         };
 
@@ -152,12 +152,12 @@
                 if (callback) {
                     callback(response);
                 } else {
-                    MessageService.setMessage('Data has been saved successfully');
+                    MessageService.setMessage('DATA_SAVE_SUCCESS');
                     $state.go('reports');
                 }
 
             }, function(error) {
-                vm.alerts.push({ type: 'danger', msg: 'Data has not been saved successfully' });
+                vm.alerts.push({ type: 'danger', msg: 'DATA_SAVE_ERROR' });
             });
         };
 
@@ -178,7 +178,7 @@
                 ReportService.generate(response.data.id).then(function(response) {
                     $state.go('report-view', { reportId: response.data.id });
                 }, function(error) {
-                    vm.alerts.push({ type: 'danger', msg: 'Report has not been generated successfully' });
+                    vm.alerts.push({ type: 'danger', msg: 'GENERATION_ERROR' });
                 });
             });
         };

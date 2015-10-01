@@ -22,3 +22,7 @@
 [ui-view].content.ng-leave-active {
     opacity: 0;
 }
+
+.iq {
+    color: #ff0000;
+}

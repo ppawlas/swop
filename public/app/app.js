@@ -4,7 +4,9 @@
 
 	angular
         .module('authApp', ['ui.router', 'satellizer', 'ui.bootstrap', 'angular-confirm', 'ui.select', 'ngSanitize', 'angularUtils.directives.dirPagination', 'ngAnimate', 'blockUI', 'pascalprecht.translate'])
-        .config(function($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, $provide, $translateProvider) {
+        .config(function($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, $provide, $translateProvider, blockUIConfig) {
+
+            blockUIConfig.message = 'Trwa ładowanie';
 
             $translateProvider.useStaticFilesLoader({
                 prefix: 'assets/resources/locale-',// path to translations files
@@ -158,8 +160,8 @@
                     url: '/organization-indicators',
                     views: {
                         content: {
-                            templateUrl: 'app/components/indicator/indicatorView.html',
-                            controller: 'IndicatorController as indicatorList',
+                            templateUrl: 'app/components/indicator/indicatorManagerView.html',
+                            controller: 'IndicatorManagerController as indicatorList',
                             resolve: {
                                 indicators: function(IndicatorService) {
                                     return IndicatorService.getForOrganization();

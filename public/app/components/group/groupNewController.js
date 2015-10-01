@@ -10,7 +10,7 @@
 
         var vm = this;
 
-        vm.title = 'New group';
+        vm.title = 'NEW_GROUP';
         vm.group = {
             users: [],
             indicators: []
@@ -42,10 +42,10 @@
 
         vm.submit = function() {
             GroupService.create(vm.group).then(function(response) {
-                MessageService.setMessage('Data has been saved successfully');
+                MessageService.setMessage('DATA_SAVE_SUCCESS');
                 $state.go('groups');
             }, function(error) {
-                vm.error = 'Data has not been saved successfully'
+                vm.error = 'DATA_SAVE_ERROR'
             });
         }
     }

@@ -33,7 +33,7 @@
 	<script src="node_modules/angular-block-ui/dist/angular-block-ui.js"></script>
 	<script src="node_modules/angular-translate/dist/angular-translate.js"></script>
 	<script src="node_modules/angular-translate/dist/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
-<!--	<script src="node_modules/angular-i18n/angular-locale_pl-pl.js"></script>-->
+	<script src="node_modules/angular-i18n/angular-locale_pl-pl.js"></script>
 
 	<!-- Application Scripts -->
 	<script src="app/app.js"></script>
@@ -45,6 +45,7 @@
 	<script src="app/components/group/groupEditController.js"></script>
 	<script src="app/components/group/groupNewController.js"></script>
 	<script src="app/components/indicator/indicatorController.js"></script>
+	<script src="app/components/indicator/indicatorManagerController.js"></script>
 	<script src="app/components/report/reportController.js"></script>
 	<script src="app/components/report/reportEditController.js"></script>
 	<script src="app/components/report/reportNewController.js"></script>

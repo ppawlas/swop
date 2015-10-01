@@ -35,6 +35,7 @@ Route::group(['prefix' => 'api'], function()
     Route::get('manager/users', 'UserController@managerIndex');
 
     Route::get('manager/indicators', 'IndicatorController@managerIndex');
+    Route::put('manager/indicators/{id}', 'IndicatorController@update');
 
     Route::get('manager/groups', 'GroupController@managerIndex');
     Route::post('manager/groups', 'GroupController@store');

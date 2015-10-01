@@ -5,8 +5,8 @@
         <button class="btn btn-xs btn-default pull-right " ng-click="organizationList.new()"><i class="fa fa-plus-square"></i> {{ 'CREATE' | translate }}</button>
     </div>
 
-    <div class="alert alert-success" role="alert" ng-show="organizationList.message">{{organizationList.message}}</div>
-    <div class="alert alert-danger" role="alert" ng-show="organizationList.error">{{organizationList.error}}</div>
+    <div class="alert alert-success" role="alert" ng-show="organizationList.message">{{organizationList.message | translate}}</div>
+    <div class="alert alert-danger" role="alert" ng-show="organizationList.error">{{organizationList.error | translate}}</div>
 
     <table class="table table-striped" ng-if="organizationList.organizations">
         <thead>

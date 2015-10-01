@@ -22,13 +22,13 @@
         vm.delete = function(reportId) {
             ReportService.delete(reportId).then(function(response) {
                 vm.error = '';
-                vm.message = 'Data has been removed successfully'
+                vm.message = 'DATA_REMOVE_SUCCESS'
                 ReportService.getAll().then(function(response) {
                     vm.reports = response.data;
                 });
             }, function(error) {
                 vm.message = '';
-                vm.error = 'Data has not been removed successfully'
+                vm.error = 'DATA_REMOVE_ERROR'
             });
         };
 
@@ -37,7 +37,7 @@
                 $state.go('report-view', { reportId: reportId });
             }, function(error) {
                 vm.message = '';
-                vm.error = 'Report has not been generated successfully';
+                vm.error = 'GENERATION_ERROR';
             });
         };
 

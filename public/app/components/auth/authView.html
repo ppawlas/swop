@@ -1,8 +1,8 @@
 <div class="col-sm-6 col-sm-offset-3">
     <div class="well">
-        <h3><strong>Ocena.IQ</strong></h3>
+        <h3><strong>Ocena.<span class="iq">IQ</span></strong></h3>
         <div class="alert alert-danger" ng-if="auth.loginError">
-            <strong>{{ 'ERROR' | translate }}: </strong> {{auth.loginErrorText}}
+            <strong>{{ 'ERROR' | translate }}: </strong> {{auth.loginErrorText | uppercase | translate}}
         </div>
         <form>
             <div class="form-group">

@@ -10,7 +10,7 @@
 
         var vm = this;
 
-        vm.title = 'Report results';
+        vm.title = 'REPORT_RESULTS';
 
         vm.error = '';
 

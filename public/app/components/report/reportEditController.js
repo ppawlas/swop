@@ -10,7 +10,7 @@
 
         var vm = this;
 
-        vm.title = 'Report details';
+        vm.title = 'REPORT_DETAILS';
         vm.report = ReportService.helpers.preprocess(angular.copy(report.data));
         vm.users = ReportService.helpers.filterUsers(report.data, users.data);
         vm.indicators = ReportService.helpers.filterIndicators(report.data, indicators.data);
@@ -108,9 +108,9 @@
                 vm.users = ReportService.helpers.filterUsers(vm.report, users.data);
                 vm.indicators = ReportService.helpers.filterIndicators(vm.report, indicators.data);
 
-                vm.alerts.push({ type: 'success', msg: 'Group has been loaded successfully' });
+                vm.alerts.push({ type: 'success', msg: 'GROUP_LOAD_SUCCESS' });
             }, function(error) {
-                vm.alerts.push({ type: 'danger', msg: 'Group has not been loaded successfully' });
+                vm.alerts.push({ type: 'danger', msg: 'GROUP_LOAD_ERROR' });
             })
         };
 
@@ -121,9 +121,9 @@
             group.indicators = vm.report.indicators;
 
             GroupService.update(group.id, group).then(function(response) {
-                vm.alerts.push({ type: 'success', msg: 'Group has been saved successfully' });
+                vm.alerts.push({ type: 'success', msg: 'GROUP_SAVE_SUCCESS' });
             }, function(error) {
-                vm.alerts.push({ type: 'danger', msg: 'Group has not been saved successfully' });
+                vm.alerts.push({ type: 'danger', msg: 'GROUP_SAVE_ERROR' });
             });
         };
 
@@ -134,12 +134,12 @@
             group.indicators = vm.report.indicators;
 
             GroupService.create(group).then(function(response) {
-                vm.alerts.push({ type: 'success', msg: 'Group has been saved successfully' });
+                vm.alerts.push({ type: 'success', msg: 'GROUP_SAVE_SUCCESS' });
                 GroupService.getAll().then(function(response) {
                     vm.groups = response.data;
                 });
             }, function(error) {
-                vm.alerts.push({ type: 'danger', msg: 'Group has not been saved successfully' });
+                vm.alerts.push({ type: 'danger', msg: 'GROUP_SAVE_ERROR' });
             });
         };
 
@@ -150,27 +150,26 @@
                     if (callback) {
                         callback();
                     } else {
-                        MessageService.setMessage('Data has been saved successfully');
+                        MessageService.setMessage('DATA_SAVE_SUCCESS');
                         $state.go('reports');
                     }
 
                 }, function(error) {
-                    vm.alerts.push({ type: 'danger', msg: 'Data has not been saved successfully' });
+                    vm.alerts.push({ type: 'danger', msg: 'DATA_SAVE_ERROR' });
                 });
             };
 
             if (ReportService.helpers.isReportChanged(report.data, vm.report)) {
-                $confirm({text: 'Report parameters has been changed. Previous results will be deleted. Do you want to proceed?'}).then(function() {
+                $confirm({text: 'CONFIRM_REPORT_SAVE'}).then(function() {
                     ReportService.reset(vm.report.id).then(function(response) {
                         save();
                     }, function(error) {
-                        vm.alerts.push({ type: 'danger', msg: 'Previous results have not been deleted successfully' });
+                        vm.alerts.push({ type: 'danger', msg: 'REPORT_RESULTS_DELETE_ERROR' });
                     });
                 });
             } else {
                 save();
             }
-
 
         };
 
@@ -186,7 +185,7 @@
                     ReportService.generate(vm.report.id).then(function(response) {
                         $state.go('report-view', { reportId: vm.report.id });
                     }, function(error) {
-                        vm.alerts.push({ type: 'danger', msg: 'Report has not been generated successfully' });
+                        vm.alerts.push({ type: 'danger', msg: 'GENERATION_ERROR' });
                     });
                 } else {
                     $state.go('report-view', {reportId: vm.report.id});
@@ -199,7 +198,7 @@
                 ReportService.generate(vm.report.id).then(function(response) {
                     $state.go('report-view', { reportId: vm.report.id });
                 }, function(error) {
-                    vm.alerts.push({ type: 'danger', msg: 'Report has not been generated successfully' });
+                    vm.alerts.push({ type: 'danger', msg: 'GENERATION_ERROR' });
                 });
             });
         };

@@ -10,7 +10,7 @@
 
         var vm = this;
 
-        vm.title = 'Group details';
+        vm.title = 'GROUP_DETAILS';
         vm.group = group.data;
         vm.users = GroupService.helpers.filterUsers(group.data, users.data);
         vm.indicators = GroupService.helpers.filterIndicators(group.data, indicators.data);
@@ -39,10 +39,10 @@
 
         vm.submit = function() {
             GroupService.update(vm.group.id, vm.group).then(function(response) {
-                MessageService.setMessage('Data has been saved successfully');
+                MessageService.setMessage('DATA_SAVE_SUCCESS');
                 $state.go('groups');
             }, function(error) {
-                vm.error = 'Data has not been saved successfully'
+                vm.error = 'DATA_SAVE_ERROR'
             });
         };
     }

@@ -12,17 +12,17 @@
 
         vm.edit = false;
 
-        vm.title = 'New organization';
+        vm.title = 'NEW_ORGANIZATION';
         vm.organization = {};
 
         vm.error = '';
 
         vm.submit = function() {
             OrganizationService.create(vm.organization).then(function(response) {
-                MessageService.setMessage('Data has been saved successfully');
+                MessageService.setMessage('DATA_SAVE_SUCCESS');
                 $state.go('organizations');
             }, function(error) {
-                vm.error = 'Data has not been saved successfully'
+                vm.error = 'DATA_SAVE_ERROR'
             });
         }
     }

@@ -1,11 +1,11 @@
 <div class="panel panel-primary">
     <!-- Default panel contents -->
     <div class="panel-heading">
-        <strong>{{reportForm.title}}</strong>
+        <strong>{{reportForm.title | translate}}</strong>
         <button class="btn btn-xs btn-default pull-right " ng-click="reportForm.toggleGroupPanel()"><i class="fa fa-group"></i> {{ 'GROUP' | translate }}</button>
     </div>
 
-    <alert ng-repeat="alert in reportForm.alerts" type="{{alert.type}}" close="reportForm.closeAlert($index)">{{alert.msg}}</alert>
+    <alert ng-repeat="alert in reportForm.alerts" type="{{alert.type}}" close="reportForm.closeAlert($index)">{{alert.msg | translate}}</alert>
 
     <div style="padding:30px">
 
@@ -63,7 +63,8 @@
                     <p class="input-group">
                         <input type="date" class="form-control" datepicker-popup ng-model="reportForm.report.start_date"
                                is-open="reportForm.datepicker.status.opened" ng-required="true"
-                               datepicker-options="reportForm.datepicker.options" close-text="Close"/>
+                               datepicker-options="reportForm.datepicker.options"
+                               close-text="{{ 'CLOSE' | translate }}" clear-text="{{ 'CLEAR' | translate }}" current-text="{{ 'TODAY' | translate }}"/>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="reportForm.datepicker.open($event)"><i class="fa fa-calendar"></i></button>
                         </span>
@@ -76,7 +77,8 @@
                     <p class="input-group">
                         <input type="date" class="form-control" datepicker-popup ng-model="reportForm.report.end_date"
                                is-open="reportForm.datepicker.status.opened" ng-required="true"
-                               datepicker-options="reportForm.datepicker.options" close-text="Close"/>
+                               datepicker-options="reportForm.datepicker.options"
+                               close-text="{{ 'CLOSE' | translate }}" clear-text="{{ 'CLEAR' | translate }}" current-text="{{ 'TODAY' | translate }}"/>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="reportForm.datepicker.open($event)"><i class="fa fa-calendar"></i></button>
                         </span>

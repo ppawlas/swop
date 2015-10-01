@@ -22,13 +22,13 @@
         vm.delete = function(organizationId) {
             OrganizationService.delete(organizationId).then(function(response) {
                 vm.error = '';
-                vm.message = 'Data has been removed successfully'
+                vm.message = 'DATA_REMOVE_SUCCESS'
                 OrganizationService.getAll().then(function(response) {
                     vm.organizations = response.data;
                 });
             }, function(error) {
                 vm.message = '';
-                vm.error = 'Data has not been removed successfully'
+                vm.error = 'DATA_REMOVE_ERROR'
             });
         };
 

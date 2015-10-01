@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class IndicatorController extends Controller
@@ -41,5 +42,30 @@ class IndicatorController extends Controller
 
         // Retrieve all the indicators defined for the organization of the currently authenticated manager
         return Auth::user()->organization->indicators;
+    }
+
+    public function update(Request $request, $id)
+    {
+        if (Gate::denies('managerOnly')) {
+            abort(403);
+        }
+
+        $input = $request->all();
+
+        $result = DB::transaction(function($input) use($input, $id) {
+            $indicator = Indicator::find($id);
+
+            if ($indicator) {
+                $organizationId = Auth::user()->organization->id;
+                $newCoefficient = $input['pivot']['coefficient'];
+                $indicator->organizations->find($organizationId)->pivot->coefficient = $newCoefficient;
+            }
+
+            $indicator->organizations->find($organizationId)->pivot->save();
+
+            return $indicator;
+        });
+
+        return $result;
     }
 }
