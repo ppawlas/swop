@@ -26,3 +26,7 @@
 .iq {
     color: #ff0000;
 }
+
+body {
+    padding-top: 70px;
+}

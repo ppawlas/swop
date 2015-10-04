@@ -96,5 +96,9 @@
   "CLEAR": "Clear",
   "SET": "Set",
   "RATIO": "Ratio",
-  "USER_LOGIN": "Login"
+  "USER_LOGIN": "Login",
+  "EMPLOYEE": "Employee",
+  "PERIOD": "Period",
+  "DOWNLOAD_AS_EXCEL": "Download as spreadsheet",
+  "DOWNLOAD_AS_PDF": "Download as PDF"
 }

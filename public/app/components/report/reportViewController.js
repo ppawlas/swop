@@ -6,7 +6,7 @@
         .module('authApp')
         .controller('ReportViewController', ReportViewController);
 
-    function ReportViewController(report, results, ReportService) {
+    function ReportViewController($auth, report, results, ReportService) {
 
         var vm = this;
 
@@ -15,17 +15,21 @@
         vm.error = '';
 
         vm.report = ReportService.helpers.preprocess(report.data);
-        vm.indicatorsColumns = ReportService.helpers.getIndicatorsColumns(report.data);
-        vm.indicatorsPivotColumns = ReportService.helpers.getIndicatorsPivotColumns(report.data);
-        vm.userResults = ReportService.helpers.getUserResults(results.data);
-        vm.usersStatistics = ReportService.helpers.getUsersStatistics(results.data, report.data);
-        vm.indicatorsStatistics = ReportService.helpers.getIndicatorsStatistics(results.data);
-        vm.globalStatistics = ReportService.helpers.getGlobalStatistics(vm.usersStatistics);
 
-        vm.getColorClass = function(userId, indicatorId, resultType) {
-            var result = vm.userResults[userId][indicatorId][resultType];
-            var min = vm.indicatorsStatistics[indicatorId][resultType].min;
-            var max = vm.indicatorsStatistics[indicatorId][resultType].max;
+        vm.table = results.data;
+
+        vm.visible = function(component) {
+            return component.visible;
+        };
+
+        vm.comparator = function(user) {
+            return user.sum;
+        };
+
+        vm.color = function(result, indicatorId, resultType) {
+
+            var min = vm.table.statistics.min.indicators[indicatorId][resultType].data;
+            var max = vm.table.statistics.max.indicators[indicatorId][resultType].data;
 
             var dangerThreshold = min + (max - min) / 3;
             var successThreshold = max - (max - min) / 3;
@@ -39,8 +43,12 @@
             }
         };
 
-        vm.sumComparator = function(user) {
-            return vm.usersStatistics[user.id].sum;
+        vm.excelUrl = function() {
+            return ReportService.helpers.getExcelUrl(vm.report.id);
+        };
+
+        vm.pdfUrl = function() {
+            return ReportService.helpers.getPdfUrl(vm.report.id);
         };
 
     }

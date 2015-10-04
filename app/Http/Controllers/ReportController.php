@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CreateReportRequest;
+use App\Repositories\ExcelRepository;
+use App\Repositories\ReportRepository;
 
 use Faker\Factory as Faker;
 use Carbon\Carbon;
@@ -90,15 +92,13 @@ class ReportController extends Controller
         return $report;
     }
 
-    public function results($id)
+    public function results(ReportRepository $reportRepository, $id)
     {
         $report = Report::with('users', 'indicators')->find($id);
 
         $this->authorize($report);
 
-        $results = Result::whereHas('report', function($report) use($id) {
-            $report->where('id', $id);
-        })->get();
+        $results = $reportRepository->getResultsTable($report);
 
         return $results;
     }
@@ -233,5 +233,27 @@ class ReportController extends Controller
         }
 
         return Report::destroy($id);
+    }
+
+    public function excel(ReportRepository $reportRepository, ExcelRepository $excelRepository, $id)
+    {
+        $report = Report::with('users', 'indicators')->find($id);
+
+        $this->authorize($report);
+
+        $results = $reportRepository->getResultsTable($report);
+
+        return $excelRepository->getExcel($results);
+    }
+
+    public function pdf(ReportRepository $reportRepository, ExcelRepository $excelRepository, $id)
+    {
+        $report = Report::with('users', 'indicators')->find($id);
+
+        $this->authorize($report);
+
+        $results = $reportRepository->getResultsTable($report);
+
+        return $excelRepository->getPdf($results);
     }
 }

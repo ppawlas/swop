@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>SWOP</title>
+		<title>Ocena.IQ</title>
 		<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
 		<link rel="stylesheet" href="node_modules/angular-ui-select/select.css">
 		<link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
@@ -15,7 +15,7 @@
             <div ui-view="navbar"></div>
         </header>
 
-		<div class="container">
+		<div class="container-fluid">
 			<div ui-view="content" class="content"></div>
 		</div>
 

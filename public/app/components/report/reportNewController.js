@@ -10,6 +10,8 @@
 
         var vm = this;
 
+        vm.new = true;
+
         vm.title = 'NEW_REPORT';
         vm.report = {
             users: [],
@@ -97,10 +99,6 @@
         vm.removeIndicator = function(index) {
             vm.indicators.push(vm.report.indicators[index]);
             vm.report.indicators.splice(index, 1);
-        };
-
-        vm.toggleGroupPanel = function() {
-            vm.groupPanel = !vm.groupPanel;
         };
 
         vm.loadGroup = function() {

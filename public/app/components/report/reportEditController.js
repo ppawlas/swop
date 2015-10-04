@@ -10,6 +10,8 @@
 
         var vm = this;
 
+        vm.new = false;
+
         vm.title = 'REPORT_DETAILS';
         vm.report = ReportService.helpers.preprocess(angular.copy(report.data));
         vm.users = ReportService.helpers.filterUsers(report.data, users.data);
@@ -94,10 +96,6 @@
         vm.removeIndicator = function(index) {
             vm.indicators.push(vm.report.indicators[index]);
             vm.report.indicators.splice(index, 1);
-        };
-
-        vm.toggleGroupPanel = function() {
-            vm.groupPanel = !vm.groupPanel;
         };
 
         vm.loadGroup = function() {

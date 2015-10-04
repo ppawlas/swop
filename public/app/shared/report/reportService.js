@@ -6,7 +6,7 @@
         .module('authApp')
         .factory('ReportService', ReportService);
 
-    function ReportService($http) {
+    function ReportService($http, $auth) {
         var ReportService = {};
 
         ReportService.getAll = function() {
@@ -50,6 +50,14 @@
         };
 
         ReportService.helpers = {};
+
+        ReportService.helpers.getExcelUrl = function(reportId) {
+            return '/api/manager/reports/' + reportId + '/excel?token=' + $auth.getToken();
+        };
+
+        ReportService.helpers.getPdfUrl = function(reportId) {
+            return '/api/manager/reports/' + reportId + '/pdf?token=' + $auth.getToken();
+        };
 
         /**
          * Filter the given array of User objects only to those that are not yet

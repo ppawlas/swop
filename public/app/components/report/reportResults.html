@@ -7,7 +7,7 @@
     <div class="table-responsive">
 
         <div class="well">
-            <h5><strong>{{ 'NAME' | translate }}:</strong> {{reportResults.report.name}}</h5>
+            <h5><strong>{{ 'EMPLOYEE' | translate }}:</strong> {{reportResults.report.name}}</h5>
             <h5><strong>{{ 'REPORTING_PERIOD' | translate }}:</strong> {{reportResults.report.start_date | date:'yyyy-MM-dd'}} - {{reportResults.report.end_date | date:'yyyy-MM-dd'}}</h5>
             <h5><strong>{{ 'EVALUATED_AT' | translate }}:</strong> {{reportResults.report.evaluated_at | date:'yyyy-MM-dd hh:mm:ss'}}</h5>
         </div>
@@ -16,54 +16,54 @@
             <thead>
                 <tr>
                     <th rowspan="2">#</th>
-                    <th rowspan="2">{{ 'NAME' | translate }}</th>
-                    <th colspan="{{indicatorColumn.colspan}}" ng-repeat="indicatorColumn in reportResults.indicatorsColumns">
-                        {{indicatorColumn.name}}
+                    <th rowspan="2">{{ 'EMPLOYEE' | translate }}</th>
+                    <th colspan="{{indicator.colspan}}" ng-repeat="indicator in reportResults.table.headers.indicators | filter:reportResults.visible">
+                        {{indicator.name}}
                     </th>
                     <th rowspan="2">{{ 'SUM' | translate }} <i class="fa fa-sort-amount-desc"></i></th>
                 </tr>
                 <tr>
-                    <th ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
-                        {{indicatorsPivotColumn.type | uppercase | translate}}
+                    <th ng-repeat="component in reportResults.table.headers.components | filter:reportResults.visible">
+                        {{component.type | uppercase | translate}}
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="user in reportResults.report.users | orderBy:reportResults.sumComparator:true">
-                    <td><strong>{{$index}}</strong></td>
-                    <td>{{user.name}} {{user.surname}}</td>
+                <tr ng-repeat="user in reportResults.table.results | orderBy:reportResults.comparator:true">
+                    <td><strong>{{ 1 + $index }}</strong></td>
+                    <td>{{user.displayName}}</td>
                     <td
-                            ng-class="reportResults.getColorClass(user.id, indicatorsPivotColumn.id, indicatorsPivotColumn.type)"
-                            ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
-                        {{reportResults.userResults[user.id][indicatorsPivotColumn.id][indicatorsPivotColumn.type]}}
+                            ng-class="reportResults.color(user.indicators[component.id][component.type].data, component.id, component.type)"
+                            ng-repeat="component in reportResults.table.headers.components | filter:reportResults.visible">
+                        {{ user.indicators[component.id][component.type].data | number: 2 }}
                     </td>
-                    <td>{{reportResults.usersStatistics[user.id].sum | number: 2}}</td>
+                    <td>{{ user.sum | number: 2 }}</td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <td></td>
                     <td>{{ 'AVG' | translate }}</td>
-                    <td ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
-                        {{reportResults.indicatorsStatistics[indicatorsPivotColumn.id][indicatorsPivotColumn.type].avg | number: 2}}
+                    <td ng-repeat="component in reportResults.table.headers.components | filter:reportResults.visible">
+                        {{ reportResults.table.statistics.avg.indicators[component.id][component.type].data | number: 2 }}
                     </td>
-                    <td>{{reportResults.globalStatistics.avg | number: 4}}</td>
+                    <td>{{ reportResults.table.statistics.avg.sum | number: 2 }}</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>{{ 'MIN' | translate }}</td>
-                    <td ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
-                        {{reportResults.indicatorsStatistics[indicatorsPivotColumn.id][indicatorsPivotColumn.type].min | number: 2}}
+                    <td ng-repeat="component in reportResults.table.headers.components | filter:reportResults.visible">
+                        {{ reportResults.table.statistics.min.indicators[component.id][component.type].data | number: 2 }}
                     </td>
-                    <td>{{reportResults.globalStatistics.min | number: 4}}</td>
+                    <td>{{ reportResults.table.statistics.min.sum | number: 2 }}</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>{{ 'MAX' | translate }}</td>
-                    <td ng-repeat="indicatorsPivotColumn in reportResults.indicatorsPivotColumns">
-                        {{reportResults.indicatorsStatistics[indicatorsPivotColumn.id][indicatorsPivotColumn.type].max | number: 2}}
+                    <td ng-repeat="component in reportResults.table.headers.components | filter:reportResults.visible">
+                        {{ reportResults.table.statistics.max.indicators[component.id][component.type].data | number: 2 }}
                     </td>
-                    <td>{{reportResults.globalStatistics.max | number: 4}}</td>
+                    <td>{{ reportResults.table.statistics.max.sum | number: 2 }}</td>
                 </tr>
             </tfoot>
         </table>
@@ -71,10 +71,12 @@
 
     <div class="well">
         <h4>{{ 'LEGEND' | translate }}</h4>
-        <h5 ng-repeat="indicatorColumn in reportResults.indicatorsColumns"><strong>{{indicatorColumn.name}}:</strong> {{indicatorColumn.description}}</h5>
+        <h5 ng-repeat="indicator in reportResults.table.headers.indicators | filter:reportResults.visible"><strong>{{indicator.name}}:</strong> {{indicator.description}}</h5>
     </div>
 
     <div class="panel-footer">
+        <p><a role="button" ng-href="{{ reportResults.excelUrl() }}" download ><i class="fa fa-file-excel-o"></i> {{ 'DOWNLOAD_AS_EXCEL' | translate }}</a></p>
+        <p><a role="button" ng-href="{{ reportResults.pdfUrl() }}" download ><i class="fa fa-file-pdf-o"></i> {{ 'DOWNLOAD_AS_PDF' | translate }}</a></p>
         <p><a role="button" ui-sref="report-edit({reportId: reportResults.report.id})"><i class="fa fa-arrow-circle-left"></i> {{ 'REPORT_DETAILS' | translate }}</a></p>
         <p><a role="button" ui-sref="reports"><i class="fa fa-arrow-circle-left"></i> {{ 'REPORTS' | translate }}</a></p>
     </div>

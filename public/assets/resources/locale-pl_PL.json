@@ -96,6 +96,10 @@
   "CLEAR": "Wyczyść",
   "SET": "Ustaw",
   "RATIO": "Procent",
-  "USER_LOGIN": "Login"
+  "USER_LOGIN": "Login",
+  "EMPLOYEE": "Pracownik",
+  "PERIOD": "Okres",
+  "DOWNLOAD_AS_EXCEL": "Pobierz jako arkusz kalkulacyjny",
+  "DOWNLOAD_AS_PDF": "Pobierz jako PDF"
 
 }
