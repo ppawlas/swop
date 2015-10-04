@@ -31,10 +31,10 @@
             <td>{{ $user['displayName'] }}</td>
             @foreach ($report['headers']['components'] as $component)
                 @if ($component['visible'])
-                    <td>{{ number_format($user['indicators'][$component['id']][$component['type']]['data']) }}</td>
+                    <td>{{ number_format($user['indicators'][$component['id']][$component['type']]['data'], 0, ',', '') }}</td>
                 @endif
             @endforeach
-            <td>{{ number_format($user['sum']) }}</td>
+            <td>{{ number_format($user['sum'], 0, ',', '') }}</td>
         </tr>
     @endforeach
 
@@ -43,10 +43,10 @@
         <td>Średnia</td>
         @foreach ($report['headers']['components'] as $component)
             @if ($component['visible'])
-                <td>{{ number_format($report['statistics']['avg']['indicators'][$component['id']][$component['type']]['data']) }}</td>
+                <td>{{ number_format($report['statistics']['avg']['indicators'][$component['id']][$component['type']]['data'], 0, ',', '') }}</td>
             @endif
         @endforeach
-        <td>{{ number_format($report['statistics']['avg']['sum']) }}</td>
+        <td>{{ number_format($report['statistics']['avg']['sum'], 0, ',', '') }}</td>
     </tr>
 
     <tr>
@@ -54,10 +54,10 @@
         <td>Minimum</td>
         @foreach ($report['headers']['components'] as $component)
             @if ($component['visible'])
-                <td>{{ number_format($report['statistics']['min']['indicators'][$component['id']][$component['type']]['data']) }}</td>
+                <td>{{ number_format($report['statistics']['min']['indicators'][$component['id']][$component['type']]['data'], 0, ',', '') }}</td>
             @endif
         @endforeach
-        <td>{{ number_format($report['statistics']['min']['sum']) }}</td>
+        <td>{{ number_format($report['statistics']['min']['sum'], 0, ',', '') }}</td>
     </tr>
 
     <tr>
@@ -65,10 +65,10 @@
         <td>Maximum</td>
         @foreach ($report['headers']['components'] as $component)
             @if ($component['visible'])
-                <td>{{ number_format($report['statistics']['max']['indicators'][$component['id']][$component['type']]['data']) }}</td>
+                <td>{{ number_format($report['statistics']['max']['indicators'][$component['id']][$component['type']]['data'], 0, ',', '') }}</td>
             @endif
         @endforeach
-        <td>{{ number_format($report['statistics']['max']['sum']) }}</td>
+        <td>{{ number_format($report['statistics']['max']['sum'], 0, ',', '') }}</td>
     </tr>
 </table>
 </html>

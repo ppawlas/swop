@@ -35,9 +35,9 @@
                     <td
                             ng-class="reportResults.color(user.indicators[component.id][component.type].data, component.id, component.type)"
                             ng-repeat="component in reportResults.table.headers.components | filter:reportResults.visible">
-                        {{ user.indicators[component.id][component.type].data | number: 2 }}
+                        {{ user.indicators[component.id][component.type].data | number: 0 }}
                     </td>
-                    <td>{{ user.sum | number: 2 }}</td>
+                    <td>{{ user.sum | number: 0 }}</td>
                 </tr>
             </tbody>
             <tfoot>
@@ -45,25 +45,25 @@
                     <td></td>
                     <td>{{ 'AVG' | translate }}</td>
                     <td ng-repeat="component in reportResults.table.headers.components | filter:reportResults.visible">
-                        {{ reportResults.table.statistics.avg.indicators[component.id][component.type].data | number: 2 }}
+                        {{ reportResults.table.statistics.avg.indicators[component.id][component.type].data | number: 0 }}
                     </td>
-                    <td>{{ reportResults.table.statistics.avg.sum | number: 2 }}</td>
+                    <td>{{ reportResults.table.statistics.avg.sum | number: 0 }}</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>{{ 'MIN' | translate }}</td>
                     <td ng-repeat="component in reportResults.table.headers.components | filter:reportResults.visible">
-                        {{ reportResults.table.statistics.min.indicators[component.id][component.type].data | number: 2 }}
+                        {{ reportResults.table.statistics.min.indicators[component.id][component.type].data | number: 0 }}
                     </td>
-                    <td>{{ reportResults.table.statistics.min.sum | number: 2 }}</td>
+                    <td>{{ reportResults.table.statistics.min.sum | number: 0 }}</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>{{ 'MAX' | translate }}</td>
                     <td ng-repeat="component in reportResults.table.headers.components | filter:reportResults.visible">
-                        {{ reportResults.table.statistics.max.indicators[component.id][component.type].data | number: 2 }}
+                        {{ reportResults.table.statistics.max.indicators[component.id][component.type].data | number: 0 }}
                     </td>
-                    <td>{{ reportResults.table.statistics.max.sum | number: 2 }}</td>
+                    <td>{{ reportResults.table.statistics.max.sum | number: 0 }}</td>
                 </tr>
             </tfoot>
         </table>
